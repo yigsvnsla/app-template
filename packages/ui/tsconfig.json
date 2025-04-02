@@ -1,8 +1,39 @@
 {
-  "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist"
+		"lib": ["DOM", "DOM.Iterable", "ES2022", "ESNext"],
+		"types": ["bun-types", "vite/client"],
+		"target": "ES2022",
+		"isolatedModules": true,
+		"moduleDetection": "force",
+		"esModuleInterop": true,
+		"jsx": "react-jsx",
+		"module": "ESNext",
+		"resolveJsonModule": true,
+		"allowJs": true,
+		"forceConsistentCasingInFileNames": true,
+		"baseUrl": ".",
+		"paths": {
+			"@package/ui/*": ["./*"]
+		},
+
+		// Bundler mode
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": true,
+
+		// Best practices
+		"strict": true,
+		"skipLibCheck": true,
+		"noFallthroughCasesInSwitch": true,
+
+		// Some stricter flags (disabled by default)
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noPropertyAccessFromIndexSignature": false,
+
+		// Vite takes care of building everything, not tsc.
+		"noEmit": true
   },
-  "include": ["src"],
+  "include": ["."],
   "exclude": ["node_modules", "dist"]
 }

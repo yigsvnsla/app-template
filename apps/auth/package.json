@@ -1,0 +1,23 @@
+{
+	"name": "@app/auth",
+	"version": "1.0.50",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "bun --bun run --hot src/index.ts",
+		"lint": "biome check --error-on-warnings ./src",
+		"format": "biome format --write ./app",
+		"lint:fix": "biome lint --write ./src",
+		"typecheck": "tsc --noemit"
+	},
+	"dependencies": {
+		"@chneau/elysia-logger": "^1.0.8",
+		"@elysiajs/cors": "^1.2.0",
+		"elysia": "latest",
+		"@package/better-auth": "workspace:*"
+	},
+	"devDependencies": {
+		"bun-types": "latest"
+	},
+	"module": "src/index.js"
+}

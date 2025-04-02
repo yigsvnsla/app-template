@@ -1,0 +1,22 @@
+{
+	"name": "@package/email",
+	"version": "1.0.2",
+	"private": true,
+	"type": "module",
+	"module": "index.js",
+	"scripts": {
+		"build": "email build",
+		"dev": "email dev --dir ./templates --port 7878",
+		"export": "email export"
+	},
+	"dependencies": {
+		"@react-email/components": "0.0.34",
+		"react-dom": "19.0.0",
+		"react": "19.0.0"
+	},
+	"devDependencies": {
+		"@types/react": "19.0.1",
+		"@types/react-dom": "19.0.1",
+		"react-email": "4.0.2"
+	}
+}
