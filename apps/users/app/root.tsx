@@ -1,21 +1,14 @@
-import {
-	Links,
-	Meta,
-	Outlet,
-	Scripts,
-	ScrollRestoration,
-	isRouteErrorResponse,
-	useLoaderData,
-	useRouteLoaderData,
-} from "react-router";
-
+import { Toaster } from "@package/ui/components/sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+import { Outlet, isRouteErrorResponse } from "react-router";
 import { Theme, ThemeProvider } from "remix-themes";
 import { links as RootLinks } from "~/root.links";
 import { loader as rootLoader } from "~/root.loader";
 import { meta as RootMeta } from "~/root.meta";
+import { ErrorTemplate } from "~/templates/error.template";
 import type { Route } from "./+types/root";
 import { RootLayout } from "./root.layout";
-import { ErrorTemplate } from "./templates/error.template";
 
 export const links = RootLinks;
 export const meta = RootMeta;
@@ -23,6 +16,7 @@ export const meta = RootMeta;
 export const loader = rootLoader;
 
 export function Layout({ children }: { children: React.ReactNode }) {
+	const [queryClient] = useState(new QueryClient());
 	// TODO: Revisar esto para intentar pasarlo a el ClientLoader
 	// let data = useRouteLoaderData<typeof loader>("root");
 
@@ -41,7 +35,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			specifiedTheme={theme as Theme}
 			themeAction="set-theme-action"
 		>
-			<RootLayout ssrTheme={Boolean(theme)}>{children}</RootLayout>
+			<QueryClientProvider client={queryClient}>
+				<RootLayout ssrTheme={Boolean(theme)}>{children}</RootLayout>
+				<Toaster />
+			</QueryClientProvider>
 		</ThemeProvider>
 	);
 }
@@ -65,10 +62,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	return <ErrorTemplate message={message} details={details} stack={stack} />;
 }
 
-export default function App() {
-	return <Outlet />;
-}
-
 export function HydrateFallback() {
 	return <h1>Loading...</h1>;
+}
+
+export default function App() {
+	return <Outlet />;
 }

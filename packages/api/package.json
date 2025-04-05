@@ -1,0 +1,21 @@
+{
+  "name": "@package/api",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "openapi-typescript": "^7.6.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "::generate": "bunx openapi-typescript --make-paths-enum",
+    "postinstall": "bun run ::generate"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.13.5",
+    "openapi-react-query": "^0.3.1"
+  }
+}

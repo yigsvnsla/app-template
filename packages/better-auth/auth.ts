@@ -1,11 +1,11 @@
-import { PGlite } from "@electric-sql/pglite";
+import { createClient } from "@libsql/client";
+import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { getEnvArray } from "@package/better-auth/helpers/env";
 import { smtp_transporter } from "@package/better-auth/helpers/smtp";
-import { render } from "@package/email/utils/render";
 import { InviteUserEmail } from "@package/email/templates/InviteUserEmail";
+import { render } from "@package/email/utils/render";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { admin, magicLink, openAPI, organization } from "better-auth/plugins";
-import { PGliteDialect } from "kysely-pglite-dialect";
 
 // console.log(process.env);
 
@@ -74,10 +74,14 @@ const emailVerificationOptions: EmailVerificationOptions = {
 	},
 };
 
+
+
 export const auth = betterAuth({
 	appName: "better-auth-test",
-	database: new PGliteDialect(new PGlite(`${__dirname}/pg`)),
-	trustedOrigins: getEnvArray(process.env.BETTER_AUTH_TRUSTED_ORIGINS || "*"),
+	database: new LibsqlDialect({
+		url: `file:${__dirname}/better-auth.sqlite`,
+	}),
+	trustedOrigins: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS"),
 	plugins: [openAPI(), admin(), organization(), magicLink(magicLinkOptions)],
 	emailAndPassword: { enabled: true, requireEmailVerification: true },
 	logger: { disabled: false },

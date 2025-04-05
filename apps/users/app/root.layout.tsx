@@ -15,8 +15,8 @@ interface RootLayoutProps extends PropsWithChildren {
 export const RootLayout: FC<RootLayoutProps> = ({ children, ssrTheme }) => {
 	const [theme] = useTheme();
 
-	console.log(`useTheme() inside InnerLayout = ${theme}`);
-	console.log(`ssrTheme inside InnerLayout = ${ssrTheme}`);
+	// console.log(`useTheme() inside InnerLayout = ${theme}`);
+	// console.log(`ssrTheme inside InnerLayout = ${ssrTheme}`);
 
 	return (
 		<html lang="en" data-theme={theme ?? ""} className={cn(theme)}>

@@ -32,14 +32,14 @@ export const ErrorTemplate: FC<ErrorTemplateProps> = ({
 					<p className="text-gray-500 dark:text-gray-400">{details}</p>
 				</div>
 				{stack && (
-					<pre className="w-full p-4 overflow-x-auto">
+					<pre className="w-full max-h-1/4 p-4 overflow-x-auto">
 						<code>{stack}</code>
 					</pre>
 				)}
 				<Link
 					className="inline-flex h-12 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-					to=".."
-					prefetch="intent"
+					to="../"
+					relative="path"
 				>
 					Go back home
 				</Link>

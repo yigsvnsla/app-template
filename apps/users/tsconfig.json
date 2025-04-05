@@ -17,6 +17,7 @@
     "paths": {
       "~/*": ["./app/*"],
       "@package/ui/*": ["../../packages/ui/src/*"],
+      "@package/api/*": ["../../packages/api/src/*"],
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,

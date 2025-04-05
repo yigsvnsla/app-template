@@ -10,7 +10,7 @@ const app = new Elysia()
 	.use(logger())
 	.use(
 		cors({
-			origin: getEnvArray(process.env.BETTER_AUTH_TRUSTED_ORIGINS || "*"),
+			origin: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS"),
 			methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 			credentials: true,
 			allowedHeaders: ["Content-Type", "Authorization"],

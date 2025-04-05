@@ -35,7 +35,7 @@
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-phone-number-input": "^3.4.12",
-    "remix-hook-form": "^6.1.3",
+    "remix-hook-form": "^6.2.0",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.0.1",
     "tw-animate-css": "^1.2.4",

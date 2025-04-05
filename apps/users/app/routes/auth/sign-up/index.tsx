@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { $betterAuthClient } from "@package/api/better-auth.client";
-import type { paths } from "@package/api/better-auth.openapi";
 import { ApiPaths } from "@package/api/better-auth.openapi";
 import { Button } from "@package/ui/components/button";
 import {
@@ -18,9 +17,7 @@ import { Spinner } from "@package/ui/components/spinner";
 import { LuGithub } from "@package/ui/icons";
 import { cn } from "@package/ui/lib/utils";
 import { z } from "@package/ui/lib/validators";
-import { useMutation } from "@tanstack/react-query";
 import { GalleryVerticalEnd } from "lucide-react";
-import { use, useEffect } from "react";
 import { Form, Link, useLoaderData } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 
@@ -38,7 +35,7 @@ export async function clientLoader() {
 	return { $betterAuthClient };
 }
 
-export function SignInIndex() {
+export function SignUpIndex() {
 	const { $betterAuthClient } =
 		useLoaderData<Awaited<ReturnType<typeof clientLoader>>>();
 
@@ -141,7 +138,7 @@ export function SignInIndex() {
 											type="submit"
 											className="w-full dark:text-white"
 										>
-											{isPending ? <Spinner className="text-white"/> : "Login"}
+											{isPending ? <Spinner className="text-white" /> : "Login"}
 										</Button>
 										<div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
 											<span className="relative z-10 bg-background px-2 text-muted-foreground">
@@ -180,4 +177,4 @@ export function SignInIndex() {
 	);
 }
 
-export default SignInIndex;
+export default SignUpIndex;
