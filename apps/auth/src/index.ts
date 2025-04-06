@@ -32,3 +32,11 @@ const app = new Elysia()
 console.log(
 	`🦊 Elysia AUTH is running at ${app.server?.hostname}:${app.server?.port}`,
 );
+
+// origin: (request) => {
+// 	const origin = request.headers.get("origin");
+// 	if (!origin) return false;
+// 	console.log({ origin, trusted: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS").includes(origin) });
+
+// 	return getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS").includes(origin);
+// },

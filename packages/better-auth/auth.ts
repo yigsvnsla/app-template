@@ -1,8 +1,8 @@
-import { createClient } from "@libsql/client";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { getEnvArray } from "@package/better-auth/helpers/env";
 import { smtp_transporter } from "@package/better-auth/helpers/smtp";
 import { InviteUserEmail } from "@package/email/templates/InviteUserEmail";
+import { VerificationUserEmail } from "@package/email/templates/verificationUserEmail";
 import { render } from "@package/email/utils/render";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { admin, magicLink, openAPI, organization } from "better-auth/plugins";
@@ -64,17 +64,19 @@ const emailVerificationOptions: EmailVerificationOptions = {
 			from: '"Project Carter" <project_carter@ethereal.email>',
 			to: "bar@example.com",
 			subject: "Account Verification 📨",
-			html: `
-							<b>Hello world HTML</b>
-							<span style="color:white">${url}</span>
-							<p style="color:white">${JSON.stringify(user)} </p>
-						`,
+			html: await render(
+				VerificationUserEmail({
+					// TODO: ADD USER INFO
+					appName: "ACME INC",
+
+					inviteLink: url,
+				}),
+			),
 		});
-		console.log("Message sent: %s", messageId); // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+		// Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+		console.log("Message sent: %s", messageId);
 	},
 };
-
-
 
 export const auth = betterAuth({
 	appName: "better-auth-test",
@@ -82,7 +84,14 @@ export const auth = betterAuth({
 		url: `file:${__dirname}/better-auth.sqlite`,
 	}),
 	trustedOrigins: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS"),
-	plugins: [openAPI(), admin(), organization(), magicLink(magicLinkOptions)],
+	plugins: [
+		openAPI(),
+		admin({
+			adminUserIds: ["kiT71kZPCyFOefHbvI4eZ9fqCKDQ2uGY"],
+		}),
+		organization(),
+		magicLink(magicLinkOptions),
+	],
 	emailAndPassword: { enabled: true, requireEmailVerification: true },
 	logger: { disabled: false },
 	emailVerification: emailVerificationOptions,

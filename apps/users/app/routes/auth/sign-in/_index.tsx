@@ -15,11 +15,11 @@ import { Label } from "@package/ui/components/label";
 import { toast } from "@package/ui/components/sonner";
 import { Spinner } from "@package/ui/components/spinner";
 import { LuGithub } from "@package/ui/icons";
-import { cn } from "@package/ui/lib/utils";
 import { z } from "@package/ui/lib/validators";
 import { GalleryVerticalEnd } from "lucide-react";
-import { Form, Link, useLoaderData } from "react-router";
+import { Form, Link, useLoaderData, useNavigate } from "react-router";
 import { useRemixForm } from "remix-hook-form";
+import { useAuthStore } from "~/stores/use-auth.store";
 
 export const LoginSchema = z.object({
 	password: z.string().min(1),
@@ -35,26 +35,38 @@ export async function clientLoader() {
 	return { $betterAuthClient };
 }
 
-export function SignUpIndex() {
+export function SignInIndex() {
+	const navigate = useNavigate();
+	const storeSetToken = useAuthStore((s) => s.setToken);
+	const storeSetUser = useAuthStore((s) => s.setUser);
+
 	const { $betterAuthClient } =
 		useLoaderData<Awaited<ReturnType<typeof clientLoader>>>();
 
 	const { mutateAsync, isPending } = $betterAuthClient.useMutation(
 		"post",
 		ApiPaths.PostSigninEmail,
+		{
+			onSuccess: (data) => {
+				storeSetToken(data.token);
+				storeSetUser(data.user);
+				navigate("/dashboard");
+			},
+		},
 	);
 
 	const form = useRemixForm<z.infer<typeof LoginSchema>>({
 		mode: "onSubmit",
 		resolver,
+		defaultValues: {
+			email: "exmaple1@example.com",
+			password: "123456789",
+		},
 		submitHandlers: {
 			onValid: async ({ email, password }) => {
 				toast.promise(mutateAsync({ body: { email, password } }), {
 					loading: "Loading...",
-					success: (data) => {
-						console.log(data);
-						return "Login successful!";
-					},
+					success: "Login successful!",
 					error: (error) => error.message,
 				});
 			},
@@ -77,7 +89,7 @@ export function SignUpIndex() {
 						<FormProvider {...form}>
 							<Form
 								onSubmit={form.handleSubmit}
-								className={cn("flex flex-col gap-6")}
+								className="flex flex-col gap-6"
 							>
 								<div className="flex flex-col items-center gap-2 text-center">
 									<h1 className="text-2xl font-bold">Login to your account</h1>
@@ -177,4 +189,4 @@ export function SignUpIndex() {
 	);
 }
 
-export default SignUpIndex;
+export default SignInIndex;

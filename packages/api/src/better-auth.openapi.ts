@@ -5240,7 +5240,7 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-     schemas: {
+    schemas: {
         User: {
             id?: string;
             name?: string;

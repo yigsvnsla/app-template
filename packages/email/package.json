@@ -10,13 +10,13 @@
 		"export": "email export"
 	},
 	"dependencies": {
-		"@react-email/components": "0.0.34",
-		"react-dom": "19.0.0",
-		"react": "19.0.0"
+		"@react-email/components": "^0.0.35",
+		"react-dom": "^19.0.1",
+		"react": "^19.0.1"
 	},
 	"devDependencies": {
-		"@types/react": "19.0.1",
-		"@types/react-dom": "19.0.1",
+		"@types/react": "^19.0.1",
+		"@types/react-dom": "^19.0.1",
 		"react-email": "4.0.2"
 	}
 }
