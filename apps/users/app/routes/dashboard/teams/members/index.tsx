@@ -1,8 +1,8 @@
 import { $betterAuthClient } from "@package/api/better-auth.client";
 import { ApiPaths } from "@package/api/better-auth.openapi";
 import { useLoaderData } from "react-router";
-import { columns } from "~/routes/dashboard/team/_index/columns";
-import { DataTable } from "~/routes/dashboard/team/_index/datatable";
+import { columns } from "~/routes/dashboard/teams/members/columns";
+import { DataTable } from "~/routes/dashboard/teams/members/datatable";
 import type { Route } from "./+types";
 
 export async function clientLoader({ request }: Route.ClientLoaderArgs) {
@@ -20,7 +20,7 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 	return { $betterAuthClient };
 }
 
-export default function TeamIndex() {
+export default function TeamMemberIndex() {
 	const { $betterAuthClient } =
 		useLoaderData<Awaited<ReturnType<typeof clientLoader>>>();
 

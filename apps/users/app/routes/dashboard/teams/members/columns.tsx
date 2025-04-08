@@ -1,22 +1,20 @@
+import type { components } from "@package/api/better-auth.openapi";
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
 } from "@package/ui/components/avatar";
+import { Badge } from "@package/ui/components/badge";
+import { Button } from "@package/ui/components/button";
 import {
 	HoverCard,
 	HoverCardContent,
 	HoverCardTrigger,
 } from "@package/ui/components/hover-card";
-
-import type { components } from "@package/api/better-auth.openapi";
-import { Badge } from "@package/ui/components/badge";
-import { Button } from "@package/ui/components/button";
 import {
 	LuCalendar,
 	LuHand,
 	LuPencil,
-	LuPhone,
 	LuUserMinus,
 } from "@package/ui/icons";
 import { getAvatarInitials } from "@package/ui/lib/utils";
@@ -47,14 +45,13 @@ export const columns: ColumnDef<components["schemas"]["User"]>[] = [
 		},
 	},
 	{
-		header: "title",
+		header: "Role",
 		cell({ row }) {
 			return (
 				<section className="flex flex-col gap-x-4">
 					<h6 className="font-semibold capitalize text-base">
 						{row.original.role}
 					</h6>
-					<p className="text-xs">{row.original.email}</p>
 				</section>
 			);
 		},
@@ -107,10 +104,12 @@ export const columns: ColumnDef<components["schemas"]["User"]>[] = [
 									<div className="flex flex-col">
 										<span className="text-xs font-semibold">Expire in</span>
 										<p className="text-xs text-muted-foreground">
-											{typeof row.original.banExpires}
-											{/* {row.original.banExpires
-												? format(row.original.banExpires as Date, "MM/dd/yyyy")
-												: "forever"} */}
+											{row.original.banExpires
+												? format(
+														row.original.banExpires as unknown as string,
+														"MM/dd/yyyy",
+													)
+												: "forever"}
 										</p>
 									</div>
 								</div>
@@ -131,8 +130,7 @@ export const columns: ColumnDef<components["schemas"]["User"]>[] = [
 		cell({ row }) {
 			return (
 				<span className="w-60 block">
-					{/* {format(row.original.createdAt, "Pp")} */}
-					fixme {typeof row.original.banExpires}
+					{format(row.original.createdAt as unknown as string, "Pp")}
 				</span>
 			);
 		},
@@ -145,8 +143,7 @@ export const columns: ColumnDef<components["schemas"]["User"]>[] = [
 		cell({ row }) {
 			return (
 				<span className="w-60 block">
-					{/* {format(row.original.updatedAt, "Pp")} */}
-					fixme
+					{format(row.original.updatedAt as unknown as string, "Pp")}
 				</span>
 			);
 		},

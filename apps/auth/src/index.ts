@@ -1,13 +1,19 @@
-import { logger } from "@chneau/elysia-logger";
 import { cors } from "@elysiajs/cors";
 import type { auth } from "@package/better-auth/auth";
 import { getEnvArray } from "@package/better-auth/helpers/env";
 import { Elysia, t } from "elysia";
+import logixlysia from "logixlysia";
 import { betterAuth } from "../middleware/auth.middleware";
 
 const app = new Elysia()
+	.use(
+		logixlysia({
+			config: {
+				ip: true,
+			},
+		}),
+	)
 	.use(betterAuth)
-	.use(logger())
 	.use(
 		cors({
 			origin: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS"),
@@ -21,22 +27,11 @@ const app = new Elysia()
 		({
 			user,
 		}: {
-			user: typeof auth.$Infer.Session.user | null;
+			user: typeof auth.$Infer.Session.user;
 		}) => user,
 		{
 			auth: true,
 		},
 	)
+
 	.listen(Number(process.env.AUTH_SERVER_PORT));
-
-console.log(
-	`🦊 Elysia AUTH is running at ${app.server?.hostname}:${app.server?.port}`,
-);
-
-// origin: (request) => {
-// 	const origin = request.headers.get("origin");
-// 	if (!origin) return false;
-// 	console.log({ origin, trusted: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS").includes(origin) });
-
-// 	return getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS").includes(origin);
-// },

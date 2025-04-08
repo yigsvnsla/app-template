@@ -1,3 +1,5 @@
+import { join } from "node:path";
+import { createClient } from "@libsql/client";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { getEnvArray } from "@package/better-auth/helpers/env";
 import { smtp_transporter } from "@package/better-auth/helpers/smtp";
@@ -6,6 +8,7 @@ import { VerificationUserEmail } from "@package/email/templates/verificationUser
 import { render } from "@package/email/utils/render";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { admin, magicLink, openAPI, organization } from "better-auth/plugins";
+import { findUser } from "./helpers/client-sql";
 
 // console.log(process.env);
 
@@ -81,7 +84,7 @@ const emailVerificationOptions: EmailVerificationOptions = {
 export const auth = betterAuth({
 	appName: "better-auth-test",
 	database: new LibsqlDialect({
-		url: `file:${__dirname}/better-auth.sqlite`,
+		url: `file:${join(__dirname, "/database/better-auth.sqlite")}`,
 	}),
 	trustedOrigins: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS"),
 	plugins: [
@@ -89,7 +92,15 @@ export const auth = betterAuth({
 		admin({
 			adminUserIds: ["kiT71kZPCyFOefHbvI4eZ9fqCKDQ2uGY"],
 		}),
-		organization(),
+		organization({
+			allowUserToCreateOrganization: async (user) => {
+				const current_user = await findUser(user.id);
+				if (!current_user)
+					throw new Error("[allowUserToCreateOrganization]: USER NOT FOUND");
+
+				return current_user.role === "admin";
+			},
+		}),
 		magicLink(magicLinkOptions),
 	],
 	emailAndPassword: { enabled: true, requireEmailVerification: true },
