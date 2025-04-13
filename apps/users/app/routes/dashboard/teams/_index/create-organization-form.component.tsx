@@ -51,8 +51,7 @@ export const CreateOrganizationForm: FC<CreateOrganizationFormProps> = ({
 							<Input
 								placeholder="Insert organization slug"
 								required
-								// {...form.register("email")}
-								{...field}
+								{...form.register("slug", {})}
 							/>
 						</FormControl>
 						<FormMessage />

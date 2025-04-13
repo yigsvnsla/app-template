@@ -76,7 +76,7 @@ export default function MembersLayout() {
 		<div className="flex flex-1 flex-col">
 			<div className="@container/main flex flex-1 flex-col gap-2">
 				<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-					<CardHeader className="flex flex-row">
+					{/* <CardHeader className="flex flex-row">
 						<div>
 							<CardTitle className="text-xl">Teams</CardTitle>
 							<CardDescription>
@@ -157,7 +157,7 @@ export default function MembersLayout() {
 								</Link>
 							</Button>
 						</div>
-					</CardHeader>
+					</CardHeader> */}
 					<CardContent>
 						<Outlet />
 					</CardContent>

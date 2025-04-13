@@ -4,8 +4,9 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 
+import { Button } from "@package/ui/components/button";
 import type { FC, HTMLAttributes } from "react";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
 interface ErrorTemplateProps {
 	message: string;
@@ -18,6 +19,7 @@ export const ErrorTemplate: FC<ErrorTemplateProps> = ({
 	details,
 	stack,
 }) => {
+	const navigate = useNavigate();
 	return (
 		<main
 			key="1"
@@ -36,13 +38,12 @@ export const ErrorTemplate: FC<ErrorTemplateProps> = ({
 						<code>{stack}</code>
 					</pre>
 				)}
-				<Link
+				<Button
+					onClick={() => navigate(-1)}
 					className="inline-flex h-12 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-					to="../"
-					relative="path"
 				>
-					Go back home
-				</Link>
+					Go back
+				</Button>
 			</div>
 		</main>
 	);
