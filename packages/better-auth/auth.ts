@@ -1,5 +1,4 @@
 import { join } from "node:path";
-import { createClient } from "@libsql/client";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { getEnvArray } from "@package/better-auth/helpers/env";
 import { smtp_transporter } from "@package/better-auth/helpers/smtp";
@@ -10,29 +9,12 @@ import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { admin, magicLink, openAPI, organization } from "better-auth/plugins";
 import { findUser } from "./helpers/client-sql";
 
-// console.log(process.env);
-
 type MagicLinkOptions = Parameters<typeof magicLink>["0"];
 type EmailVerificationOptions = BetterAuthOptions["emailVerification"];
 
 const magicLinkOptions: MagicLinkOptions = {
 	disableSignUp: false,
-
 	sendMagicLink: async ({ email, token, url }, request) => {
-		// if (!request) {
-		// 	return;
-		// }
-		// const { headers } = request.clone();
-
-		// const { session, user } = <typeof server.$Infer.Session>(
-		// 	await server.api.getSession({ headers })
-		// );
-
-		// console.log(await server.api.getSession({ headers })); // token
-
-		// console.log(headers);
-		// console.log(session);
-
 		const { messageId } = await smtp_transporter.sendMail({
 			from: '"Project Carter" <project_carter@ethereal.email>',
 			to: "bar@example.com",
@@ -43,13 +25,10 @@ const magicLinkOptions: MagicLinkOptions = {
 					appImage: "https://remix.run/_brand/remix-letter-light.png",
 					username: email,
 					userImage: "https://avatars.githubusercontent.com/u/55502763?v=4",
-					// invitedByUsername: user.name ?? "USERNAME_INVITED_BY",
-					// invitedByEmail: user.email ?? "EMAIL_INVITED_BY",
 					teamName: "TEAM_NAME",
 					teamImage:
 						"https://avatars.githubusercontent.com/u/132495275?s=200&v=4",
 					inviteLink: url,
-					// inviteFromIp: session.ipAddress ?? "INVITE_FROM_IP",
 					inviteFromLocation: "INVITE_FROM_LOCATION",
 				}),
 			),
@@ -88,11 +67,15 @@ export const auth = betterAuth({
 	}),
 	trustedOrigins: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS"),
 	plugins: [
-		openAPI(),
 		admin({
 			adminUserIds: ["kiT71kZPCyFOefHbvI4eZ9fqCKDQ2uGY"],
 		}),
 		organization({
+			teams: {
+				enabled: true,
+				maximumTeams: 10,
+				allowRemovingAllTeams: true,
+			},
 			allowUserToCreateOrganization: async (user) => {
 				const current_user = await findUser(user.id);
 				if (!current_user)
@@ -102,6 +85,7 @@ export const auth = betterAuth({
 			},
 		}),
 		magicLink(magicLinkOptions),
+		openAPI(),
 	],
 	emailAndPassword: { enabled: true, requireEmailVerification: true },
 	logger: { disabled: false },

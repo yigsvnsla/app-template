@@ -1,8 +1,8 @@
 import { $betterAuthClient } from "@package/api/better-auth.client";
 import { ApiPaths } from "@package/api/better-auth.openapi";
 import { useLoaderData } from "react-router";
-import { columns } from "~/routes/dashboard/teams/$slug/members/columns";
-import { DataTable } from "~/routes/dashboard/teams/$slug/members/datatable";
+import { columns } from "~/routes/dashboard/organizations/$slug/members/columns";
+import { DataTable } from "~/routes/dashboard/organizations/$slug/members/datatable";
 import type { Route } from "./+types";
 
 export async function clientLoader({ request }: Route.ClientLoaderArgs) {

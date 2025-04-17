@@ -11,7 +11,7 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 	return { $betterAuthClient };
 }
 
-export default function TeamIndex() {
+export default function OrganizationsIndex() {
 	const { $betterAuthClient } =
 		useLoaderData<Awaited<ReturnType<typeof clientLoader>>>();
 

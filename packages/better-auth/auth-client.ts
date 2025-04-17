@@ -1,5 +1,6 @@
 import { createAuthClient } from "better-auth/client";
 import {
+	adminClient,
 	inferAdditionalFields,
 	magicLinkClient,
 	organizationClient,
@@ -11,6 +12,11 @@ export const authClient = createAuthClient({
 	plugins: [
 		magicLinkClient(),
 		organizationClient(),
+		adminClient(),
 		inferAdditionalFields<typeof auth>(),
 	],
 });
+
+// authClient.admin.createUser({
+// 	data
+// })

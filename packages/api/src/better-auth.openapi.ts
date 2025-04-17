@@ -4902,6 +4902,395 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/organization/create-team": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        organizationId?: string;
+                        name: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Bad Request. Usually due to missing parameters, or invalid parameters. */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. Due to missing or invalid authentication. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. You do not have permission to access this resource or to perform this action. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Not Found. The requested resource was not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Too Many Requests. You have exceeded the rate limit. Try again later. */
+                429: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Internal Server Error. This is a problem with the server that you cannot fix. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organization/list-teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Bad Request. Usually due to missing parameters, or invalid parameters. */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. Due to missing or invalid authentication. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. You do not have permission to access this resource or to perform this action. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Not Found. The requested resource was not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Too Many Requests. You have exceeded the rate limit. Try again later. */
+                429: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Internal Server Error. This is a problem with the server that you cannot fix. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organization/remove-team": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        teamId: string;
+                        organizationId?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Bad Request. Usually due to missing parameters, or invalid parameters. */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. Due to missing or invalid authentication. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. You do not have permission to access this resource or to perform this action. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Not Found. The requested resource was not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Too Many Requests. You have exceeded the rate limit. Try again later. */
+                429: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Internal Server Error. This is a problem with the server that you cannot fix. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organization/update-team": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        teamId: string;
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            responses: {
+                /** @description Bad Request. Usually due to missing parameters, or invalid parameters. */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. Due to missing or invalid authentication. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. You do not have permission to access this resource or to perform this action. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Not Found. The requested resource was not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Too Many Requests. You have exceeded the rate limit. Try again later. */
+                429: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+                /** @description Internal Server Error. This is a problem with the server that you cannot fix. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message?: string;
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/organization/has-permission": {
         parameters: {
             query?: never;
@@ -5302,6 +5691,7 @@ export interface components {
             organizationId?: string;
             userId?: string;
             role?: string;
+            teamId?: string;
             createdAt?: Record<string, never>;
         };
         Invitation: {
@@ -5309,9 +5699,17 @@ export interface components {
             organizationId?: string;
             email?: string;
             role?: string;
+            teamId?: string;
             status?: string;
             expiresAt?: Record<string, never>;
             inviterId?: string;
+        };
+        Team: {
+            id?: string;
+            name?: string;
+            organizationId?: string;
+            createdAt?: Record<string, never>;
+            updatedAt?: Record<string, never>;
         };
     };
     responses: never;
@@ -6446,6 +6844,10 @@ export enum ApiPaths {
     PostOrganizationUpdatemember_role = "/organization/update-member-role",
     GetOrganizationGetactive_member = "/organization/get-active-member",
     PostOrganizationLeave = "/organization/leave",
+    PostOrganizationCreateteam = "/organization/create-team",
+    GetOrganizationListteams = "/organization/list-teams",
+    PostOrganizationRemoveteam = "/organization/remove-team",
+    PostOrganizationUpdateteam = "/organization/update-team",
     PostOrganizationHaspermission = "/organization/has-permission",
     PostSigninMagiclink = "/sign-in/magic-link",
     GetMagiclinkVerify = "/magic-link/verify"

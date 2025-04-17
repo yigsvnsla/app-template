@@ -27,6 +27,7 @@ export interface Invitation {
   organizationId: string;
   role: string | null;
   status: string;
+  teamId: string | null;
 }
 
 export interface Member {
@@ -34,6 +35,7 @@ export interface Member {
   id: string;
   organizationId: string;
   role: string;
+  teamId: string | null;
   userId: string;
 }
 
@@ -57,6 +59,14 @@ export interface Session {
   updatedAt: string;
   userAgent: string | null;
   userId: string;
+}
+
+export interface Team {
+  createdAt: string;
+  id: string;
+  name: string;
+  organizationId: string;
+  updatedAt: string | null;
 }
 
 export interface User {
@@ -88,6 +98,7 @@ export interface DB {
   member: Member;
   organization: Organization;
   session: Session;
+  team: Team;
   user: User;
   verification: Verification;
 }
