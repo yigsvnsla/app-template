@@ -25,7 +25,9 @@ export const columns: ColumnDef<components["schemas"]["User"]>[] = [
 			return (
 				<section className=" flex flex-row gap-x-4">
 					<Avatar>
-						<AvatarImage src={row.original.image} />
+						<AvatarImage
+						// src={row.original.image}
+						/>
 						<AvatarFallback>
 							{getAvatarInitials(row.original.name ?? "")}
 						</AvatarFallback>

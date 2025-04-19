@@ -532,7 +532,7 @@ function SidebarMenuButton({
     }
   }
 
-  return (
+  const memoizedTooltip = React.useMemo(() => (
     <Tooltip>
       <TooltipTrigger asChild>{button}</TooltipTrigger>
       <TooltipContent
@@ -542,7 +542,9 @@ function SidebarMenuButton({
         {...tooltip}
       />
     </Tooltip>
-  )
+  ), [tooltip, state, isMobile])
+
+  return memoizedTooltip
 }
 
 function SidebarMenuAction({

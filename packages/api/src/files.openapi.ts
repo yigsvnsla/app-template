@@ -58,28 +58,25 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
-                    name: string;
                     /**
                      * Format: binary
                      * @default File
                      */
-                    file: string;
+                    readonly file: string;
                 };
                 "multipart/form-data": {
-                    name: string;
                     /**
                      * Format: binary
                      * @default File
                      */
-                    file: string;
+                    readonly file: string;
                 };
                 "text/plain": {
-                    name: string;
                     /**
                      * Format: binary
                      * @default File
                      */
-                    file: string;
+                    readonly file: string;
                 };
             };
         };
@@ -88,7 +85,23 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        path: string;
+                        id: string;
+                    };
+                    "multipart/form-data": {
+                        success: boolean;
+                        path: string;
+                        id: string;
+                    };
+                    "text/plain": {
+                        success: boolean;
+                        path: string;
+                        id: string;
+                    };
+                };
             };
         };
     };

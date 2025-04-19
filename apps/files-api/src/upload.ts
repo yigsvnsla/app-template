@@ -4,16 +4,29 @@ import { Elysia, t } from "elysia";
 export const upload = new Elysia().group("/files", (app) =>
 	app.post(
 		"/upload",
-		async ({ body }) => {
-			const { file, name } = body;
-			const path = `${join(import.meta.dir, "..", "public", Bun.randomUUIDv7())}_${basename(file.name)}`;
-			Bun.write(path, file);
-			return { success: true, path };
+		async ({ body, request }) => {
+			const { file } = body;
+			console.log(request.headers);
+			const url = new URL(request.url);
+			const uuid = crypto.randomUUID();
+			const pathToFile = `${join(import.meta.dir, "..", "public", uuid)}_${basename(file.name)}`;
+			Bun.write(pathToFile, file);
+			const pathToResource = `${url.origin}/public/${uuid}_${basename(file.name)}`;
+			return {
+				success: true,
+				path: pathToResource,
+				id: `${uuid}_${basename(file.name)}`,
+			};
 		},
 		{
 			body: t.Object({
-				name: t.String(),
-				file: t.File(),
+				file: t.File({
+				}),
+			}),
+			response: t.Object({
+				success: t.Boolean(),
+				path: t.String(),
+				id: t.String(),
 			}),
 		},
 	),

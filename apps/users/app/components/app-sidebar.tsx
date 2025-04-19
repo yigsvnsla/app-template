@@ -27,7 +27,8 @@ import {
 	SettingsIcon,
 	UsersIcon,
 } from "lucide-react";
-import type * as React from "react";
+import type React from "react";
+import { memo } from "react";
 import { Link } from "react-router";
 import { NavDocuments } from "~/components/nav-documents";
 import { NavMain } from "~/components/nav-main";
@@ -155,7 +156,9 @@ const data = {
 	],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export const AppSidebar = memo(function AppSidebar({
+	...props
+}: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar collapsible="offcanvas" {...props}>
 			<SidebarHeader>
@@ -185,4 +188,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			</SidebarFooter>
 		</Sidebar>
 	);
-}
+});
