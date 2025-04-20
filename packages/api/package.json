@@ -11,8 +11,7 @@
     "typescript": "^5"
   },
   "scripts": {
-    "::generate": "bunx openapi-typescript --make-paths-enum",
-    "postinstall": "bun run ::generate"
+    "::generate": "bunx openapi-typescript --make-paths-enum"
   },
   "dependencies": {
     "openapi-fetch": "^0.13.5",

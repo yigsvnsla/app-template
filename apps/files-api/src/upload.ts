@@ -20,8 +20,7 @@ export const upload = new Elysia().group("/files", (app) =>
 		},
 		{
 			body: t.Object({
-				file: t.File({
-				}),
+				file: t.File({}),
 			}),
 			response: t.Object({
 				success: t.Boolean(),

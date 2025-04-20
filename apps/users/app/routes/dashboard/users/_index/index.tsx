@@ -1,6 +1,6 @@
 import { $betterAuthClient } from "@package/api/better-auth.client";
 import { ApiPaths } from "@package/api/better-auth.openapi";
-import { Button } from "@package/ui/components/button";
+import { Content } from "@package/ui/components/custom/content";
 import { useLoaderData } from "react-router";
 import type { Route } from "./+types";
 import { columns } from "./columns";
@@ -17,8 +17,8 @@ export default function UsersIndex() {
 	const { data } = $betterAuthClient.useQuery("get", ApiPaths.listUsers);
 
 	return (
-		<section>
+		<Content>
 			<DataTable columns={columns} data={data?.users ?? []} />
-		</section>
+		</Content>
 	);
 }

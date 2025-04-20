@@ -8,7 +8,7 @@ const Content: FC<PropsWithChildren<HTMLAttributes<HTMLDivElement>>> = ({
 	className,
 }) => {
 	return (
-		<section className={cn("container p-4 space-y-4", className)}>
+		<section className={cn("container p-4 space-y-4 mx-auto", className)}>
 			{children}
 		</section>
 	);
