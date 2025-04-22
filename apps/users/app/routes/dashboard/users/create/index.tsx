@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { $betterAuthClient } from "@package/api/better-auth.client";
+import { $betterAuthClient } from "@package/clients/better-auth.client";
 import {
 	ApiPaths as BetterAuthApiPaths,
 	type components,
-} from "@package/api/better-auth.openapi";
-import { $filesClient } from "@package/api/files.client";
-import { ApiPaths as FilesApiPaths } from "@package/api/files.openapi";
+} from "@package/clients/better-auth.openapi";
+import { $filesClient } from "@package/clients/files.client";
+import { ApiPaths as FilesApiPaths } from "@package/clients/files.openapi";
 
 import { Content } from "@package/ui/components/custom/content";
 import { toast } from "@package/ui/components/sonner";

@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { $betterAuthClient } from "@package/api/better-auth.client";
-import { ApiPaths } from "@package/api/better-auth.openapi";
+import { $betterAuthClient } from "@package/clients/better-auth.client";
+import { ApiPaths } from "@package/clients/better-auth.openapi";
 import { Button } from "@package/ui/components/button";
 import { PasswordInput } from "@package/ui/components/custom/input-password";
 import {

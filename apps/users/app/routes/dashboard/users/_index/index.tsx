@@ -1,5 +1,5 @@
-import { $betterAuthClient } from "@package/api/better-auth.client";
-import { ApiPaths } from "@package/api/better-auth.openapi";
+import { $betterAuthClient } from "@package/clients/better-auth.client";
+import { ApiPaths } from "@package/clients/better-auth.openapi";
 import { Content } from "@package/ui/components/custom/content";
 import { useLoaderData } from "react-router";
 import type { Route } from "./+types";

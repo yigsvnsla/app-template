@@ -1,4 +1,4 @@
-import type { components } from "@package/api/better-auth.openapi";
+import type { components } from "@package/clients/better-auth.openapi";
 import { Button } from "@package/ui/components/button";
 import {
 	LuChevronRight,

@@ -1,4 +1,4 @@
-import type { ApiPaths, paths } from "@package/api/better-auth.openapi";
+import type { ApiPaths, paths } from "@package/clients/better-auth.openapi";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 

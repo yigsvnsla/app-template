@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiPaths } from "@package/api/better-auth.openapi";
+import { ApiPaths } from "@package/clients/better-auth.openapi";
 import { Button } from "@package/ui/components/button";
 import {
 	Dialog,

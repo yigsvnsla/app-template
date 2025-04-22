@@ -1,24 +1,25 @@
 {
-	"name": "@app/auth",
-	"version": "1.0.50",
-	"type": "module",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "bun --bun run --hot src/index.ts",
-		"lint": "biome check --error-on-warnings ./src",
-		"format": "biome format --write ./app",
-		"lint:fix": "biome lint --write ./src",
-		"typecheck": "tsc --noemit"
-	},
-	"dependencies": {
-		"@elysiajs/cors": "^1.2.0",
-		"@elysiajs/swagger": "^1.2.2",
-		"@package/better-auth": "workspace:*",
-		"elysia": "latest",
-		"logixlysia": "^4.1.2"
-	},
-	"devDependencies": {
-		"bun-types": "latest"
-	},
-	"module": "src/index.js"
+  "name": "@api/auth",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "::generate": "bun run ::generate-schemas-auth && bun run ::generate-types-env && bun run ::generate-types-database",
+    "::migrate": "bunx @better-auth/cli@latest migrate --y",
+    "::generate-schemas-auth": "bunx @better-auth/cli@latest generate --y",
+    "::generate-types-env": "bunx gen-env-types ./.env -o ./types/.d.ts",
+    "::generate-types-database": "bunx kysely-codegen --out-file ./database/better-auth-db.d.ts --url file:./database/better-auth.sqlite --dialect libsql"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.2.0",
+    "@libsql/client": "^0.15.4",
+    "@libsql/kysely-libsql": "^0.4.1",
+    "better-auth": "^1.2.7",
+    "elysia": "latest"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "kysely-codegen": "^0.18.3"
+  },
+  "module": "src/index.js"
 }

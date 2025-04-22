@@ -5,8 +5,7 @@
 	},
 	"formatter": { "enabled": true, "indentStyle": "tab" },
 	"files": {
-		"ignoreUnknown": false,
-		"ignore": ["./prisma/client"]
+		"ignoreUnknown": false	
 	},
 	"linter": {
 		"enabled": true,
@@ -20,5 +19,5 @@
 			"recommended": true
 		}
 	},
-	"javascript": { "formatter": { "quoteStyle": "double" } }
+	"javascript": { "formatter": { "quoteStyle": "single" } }
 }

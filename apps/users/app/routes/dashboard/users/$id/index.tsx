@@ -1,10 +1,10 @@
 import {
 	$betterAuthClient,
 	betterAuthClient,
-} from "@package/api/better-auth.client";
-import { ApiPaths as BetterAuthApiPaths } from "@package/api/better-auth.openapi";
-import { $filesClient } from "@package/api/files.client";
-import { ApiPaths as FilesApiPaths } from "@package/api/files.openapi";
+} from "@package/clients/better-auth.client";
+import { ApiPaths as BetterAuthApiPaths } from "@package/clients/better-auth.openapi";
+import { $filesClient } from "@package/clients/files.client";
+import { ApiPaths as FilesApiPaths } from "@package/clients/files.openapi";
 import { Content } from "@package/ui/components/custom/content";
 import { useCallback } from "react";
 import { useLoaderData, useParams, useRouteLoaderData } from "react-router";

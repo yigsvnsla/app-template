@@ -1,4 +1,4 @@
-import type { components } from "@package/api/better-auth.openapi";
+import type { components } from "@package/clients/better-auth.openapi";
 import {
 	Avatar,
 	AvatarFallback,
@@ -12,6 +12,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@package/ui/components/tooltip";
+
 import { LuChevronRight, LuPencil, LuUserMinus } from "@package/ui/icons";
 import { getAvatarInitials } from "@package/ui/lib/utils";
 import type { ColumnDef } from "@tanstack/react-table";

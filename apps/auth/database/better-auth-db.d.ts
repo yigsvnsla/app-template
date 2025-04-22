@@ -19,41 +19,10 @@ export interface Account {
   userId: string;
 }
 
-export interface Invitation {
-  email: string;
-  expiresAt: string;
-  id: string;
-  inviterId: string;
-  organizationId: string;
-  role: string | null;
-  status: string;
-  teamId: string | null;
-}
-
-export interface Member {
-  createdAt: string;
-  id: string;
-  organizationId: string;
-  role: string;
-  teamId: string | null;
-  userId: string;
-}
-
-export interface Organization {
-  createdAt: string;
-  id: string;
-  logo: string | null;
-  metadata: string | null;
-  name: string;
-  slug: string;
-}
-
 export interface Session {
-  activeOrganizationId: string | null;
   createdAt: string;
   expiresAt: string;
   id: string;
-  impersonatedBy: string | null;
   ipAddress: string | null;
   token: string;
   updatedAt: string;
@@ -61,25 +30,13 @@ export interface Session {
   userId: string;
 }
 
-export interface Team {
-  createdAt: string;
-  id: string;
-  name: string;
-  organizationId: string;
-  updatedAt: string | null;
-}
-
 export interface User {
-  banExpires: string | null;
-  banned: number | null;
-  banReason: string | null;
   createdAt: string;
   email: string;
   emailVerified: number;
   id: string;
   image: string | null;
   name: string;
-  role: string | null;
   updatedAt: string;
 }
 
@@ -94,11 +51,7 @@ export interface Verification {
 
 export interface DB {
   account: Account;
-  invitation: Invitation;
-  member: Member;
-  organization: Organization;
   session: Session;
-  team: Team;
   user: User;
   verification: Verification;
 }

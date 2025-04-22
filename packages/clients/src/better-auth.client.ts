@@ -1,4 +1,4 @@
-import type { paths } from "@package/api/better-auth.openapi";
+import type { paths } from "@package/clients/better-auth.openapi";
 import createFetchClient from "openapi-fetch";
 import createClient from "openapi-react-query";
 

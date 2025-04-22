@@ -10,7 +10,7 @@
     
     "baseUrl": ".",
     "paths": {
-      "@package/api/*": ["./src/*"]
+      "@package/clients/*": ["./src/*"]
     },
 
     // Bundler mode

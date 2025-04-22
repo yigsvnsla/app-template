@@ -1,5 +1,5 @@
-import { $betterAuthClient } from "@package/api/better-auth.client";
-import { ApiPaths } from "@package/api/better-auth.openapi";
+import { $betterAuthClient } from "@package/clients/better-auth.client";
+import { ApiPaths } from "@package/clients/better-auth.openapi";
 import { useLoaderData } from "react-router";
 import { columns } from "~/routes/dashboard/organizations/$slug/members/columns";
 import { DataTable } from "~/routes/dashboard/organizations/$slug/members/datatable";
