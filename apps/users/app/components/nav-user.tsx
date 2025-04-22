@@ -36,6 +36,10 @@ import { useLoaderData, useNavigate } from "react-router";
 import type { clientLoader } from "~/routes/dashboard/_layout";
 import { useAuthStore } from "~/stores/use-auth.store";
 
+
+
+
+
 export default function NavUser() {
 	const { $betterAuthClient } =
 		useLoaderData<Awaited<ReturnType<typeof clientLoader>>>();
@@ -57,6 +61,7 @@ export default function NavUser() {
 			},
 		},
 	);
+
 
 	const handleLogout = async () => {
 		toast.promise(mutateAsync({}), {

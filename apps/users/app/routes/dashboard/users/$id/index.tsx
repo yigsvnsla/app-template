@@ -1,28 +1,50 @@
-import { $betterAuthClient } from "@package/api/better-auth.client";
+import {
+	$betterAuthClient,
+	betterAuthClient,
+} from "@package/api/better-auth.client";
 import { ApiPaths as BetterAuthApiPaths } from "@package/api/better-auth.openapi";
 import { $filesClient } from "@package/api/files.client";
 import { ApiPaths as FilesApiPaths } from "@package/api/files.openapi";
 import { Content } from "@package/ui/components/custom/content";
-import { useParams } from "react-router";
+import { useCallback } from "react";
+import { useLoaderData, useParams, useRouteLoaderData } from "react-router";
+import { useBeforeUnload } from "react-router";
+import UserCreateIndex from "../create";
+import type { Route } from "./+types";
+
+export async function clientLoader(params: Route.ClientLoaderArgs) {
+	const x = await betterAuthClient.POST(
+		BetterAuthApiPaths.PostAdminStopimpersonating,
+	);
+	// const { data, error } = await betterAuthClient.POST(
+	// 	BetterAuthApiPaths.impersonateUser,
+	// 	{
+	// 		body: {
+	// 			userId: String(params.params.id),
+	// 		},
+	// 	},
+	// );
+	// if (error) throw new Error(error.message, { cause: error });
+	// return {
+	// 	impersonation: data,
+	// };
+}
 
 export default function UserByIdIndex() {
-	const params = useParams();
+	// const { impersonation } =
+	// 	useLoaderData<Awaited<ReturnType<typeof clientLoader>>>();
 
-	const userQuery = $betterAuthClient.useQuery(
-		"post",
-		BetterAuthApiPaths.impersonateUser,
-		{
-			body: {
-				userId: String(params.id),
-			},
-		},
-	);
+	// useBeforeUnload(useCallback())
 
 	return (
-		<Content>
-			<span>UserByIdIndex {params.id}</span>
-			<br />
-			{JSON.stringify(userQuery.data)}
-		</Content>
+		<>
+			{/* <UserCreateIndex userImpersonated={impersonation} /> */}
+			<Content>
+				dasdsa
+				{/* <span>UserByIdIndex {JSON.stringify(impersonation)}</span>
+				<br />
+				{JSON.stringify(impersonation)} */}
+			</Content>
+		</>
 	);
 }

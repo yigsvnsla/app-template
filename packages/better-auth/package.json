@@ -9,7 +9,7 @@
     "::generate-secret": "bunx @better-auth/cli@latest secret",
     "::generate-schemas": "bunx @better-auth/cli@latest generate --y",
     "::migrate-schemas": "bunx @better-auth/cli@latest migrate --y",
-    "::db-generate-schemas":"bunx kysely-codegen --out-file ./database/better-auth-db.d.ts --url file:./database/better-auth.sqlite --dialect libsql",
+    "::db-generate-schemas": "bunx kysely-codegen --out-file ./database/better-auth-db.d.ts --url file:./database/better-auth.sqlite --dialect libsql",
     "postinstall": "bun run ::generate-schemas && bun run ::migrate-schemas && bun run ::db-generate-schemas",
     "build": "tsc --project tsconfig.build.json"
   },
@@ -24,6 +24,7 @@
     "@types/nodemailer": "^6.4.17",
     "better-auth": "^1.2.5",
     "kysely-codegen": "^0.18.3",
-    "nodemailer": "^6.9.16"
+    "nodemailer": "^6.9.16",
+    "zod": "^3.24.3"
   }
 }

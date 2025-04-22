@@ -1,5 +1,9 @@
 import { cors } from "@elysiajs/cors";
 import type { auth } from "@package/better-auth/auth";
+import {
+	BetterAuthDbClient,
+	findUser,
+} from "@package/better-auth/helpers/client-sql";
 import { getEnvArray } from "@package/better-auth/helpers/env";
 import { Elysia, t } from "elysia";
 import logixlysia from "logixlysia";

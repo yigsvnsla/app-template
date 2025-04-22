@@ -1,6 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { $betterAuthClient } from "@package/api/better-auth.client";
-import { ApiPaths as BetterAuthApiPaths } from "@package/api/better-auth.openapi";
+import {
+	ApiPaths as BetterAuthApiPaths,
+	type components,
+} from "@package/api/better-auth.openapi";
 import { $filesClient } from "@package/api/files.client";
 import { ApiPaths as FilesApiPaths } from "@package/api/files.openapi";
 
@@ -68,7 +71,7 @@ import {
 	LuUser,
 	LuUserCog,
 } from "@package/ui/icons";
-import { useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 
 import { PasswordInput } from "@package/ui/components/custom/input-password";
 import { getAvatarInitials } from "@package/ui/lib/utils";
@@ -90,7 +93,18 @@ export const links: Route.LinksFunction = () => [
 	{ rel: "stylesheet", href: RMC_STYLES },
 ];
 
-export default function UserCreateIndex() {
+export interface UserCreateIndexProps {
+	userImpersonated: {
+		session?: components["schemas"]["Session"];
+		user?: components["schemas"]["User"];
+	};
+}
+
+export default function UserCreateIndex({
+	userImpersonated,
+}: UserCreateIndexProps) {
+	const { session, user } = userImpersonated;
+
 	const [activeTab, setActiveTab] = useState("info");
 
 	const setDialogOpen = DialogCropperStore((state) => state.setOpen);
@@ -110,10 +124,9 @@ export default function UserCreateIndex() {
 		mode: "onSubmit",
 		resolver: zodResolver(CreateUserFormSchema),
 		defaultValues: {
-			name: "Test User",
-			email: `${self.crypto.randomUUID().split("-")[0]}@example.com`,
-			password: "123456789",
-			role: "user",
+			name: user?.name ?? "",
+			email: user?.email ?? `${crypto.randomUUID()}@example.com`,
+			role: user?.role ?? "user",
 		},
 		submitHandlers: {
 			onValid: async (form) => {

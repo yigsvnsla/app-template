@@ -9,15 +9,14 @@ import type { DB } from "../database/better-auth-db";
 
 console.log();
 
-const db = new Kysely<DB>({
+export const BetterAuthDbClient = new Kysely<DB>({
 	dialect: new LibsqlDialect({
 		url: `file:${join(__dirname, "..", "/database/better-auth.sqlite")}`,
 	}),
 });
 
 export async function findUser(id: string) {
-	return await db
-		.selectFrom("user")
+	return await BetterAuthDbClient.selectFrom("user")
 		.selectAll()
 		.where("id", "=", id)
 		.executeTakeFirstOrThrow();

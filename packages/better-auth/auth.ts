@@ -8,6 +8,7 @@ import { render } from "@package/email/utils/render";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { admin, magicLink, openAPI, organization } from "better-auth/plugins";
 import { findUser } from "./helpers/client-sql";
+import { adminUpdateUser } from "./plugins/admin-update-user";
 
 type MagicLinkOptions = Parameters<typeof magicLink>["0"];
 type EmailVerificationOptions = BetterAuthOptions["emailVerification"];
@@ -67,9 +68,9 @@ export const auth = betterAuth({
 	}),
 	trustedOrigins: getEnvArray("BETTER_AUTH_TRUSTED_ORIGINS"),
 	plugins: [
-		admin({
-			adminUserIds: ["kiT71kZPCyFOefHbvI4eZ9fqCKDQ2uGY"],
-		}),
+		admin({}),
+		adminUpdateUser(),
+
 		organization({
 			teams: {
 				enabled: true,

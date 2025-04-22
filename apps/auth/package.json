@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@elysiajs/cors": "^1.2.0",
+		"@elysiajs/swagger": "^1.2.2",
 		"@package/better-auth": "workspace:*",
 		"elysia": "latest",
 		"logixlysia": "^4.1.2"
