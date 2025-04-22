@@ -4,6 +4,7 @@ import { betterAuth } from "better-auth";
 import { openAPI } from "better-auth/plugins";
 
 export const auth = betterAuth({
+	
 	database: new LibsqlDialect({
 		url: `file:${join(__dirname, "../database/better-auth.sqlite")}`,
 	}),

@@ -14,7 +14,7 @@
     "@elysiajs/cors": "^1.2.0",
     "@libsql/client": "^0.15.4",
     "@libsql/kysely-libsql": "^0.4.1",
-    "better-auth": "^1.2.7",
+    "better-auth": "1.2.8-beta.2",
     "elysia": "latest"
   },
   "devDependencies": {
