@@ -1,16 +1,16 @@
 import { join } from "node:path";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { betterAuth } from "better-auth";
-import { openAPI } from "better-auth/plugins";
+import { admin, openAPI } from "better-auth/plugins";
 
 export const auth = betterAuth({
-	
 	database: new LibsqlDialect({
 		url: `file:${join(__dirname, "../database/better-auth.sqlite")}`,
 	}),
-	// trustedOrigins: [process.env.CLIENT_ADMIN_PANEL],
+	trustedOrigins: [process.env.APP_ADMIN_ORIGIN],
 	plugins: [
-		// admin(), magicLink(magicLinkOptions),
+		//  magicLink(magicLinkOptions),
+		admin(),
 		openAPI(),
 	],
 	emailAndPassword: { enabled: true, requireEmailVerification: true },
@@ -68,4 +68,3 @@ export const auth = betterAuth({
 // 		console.log("Message sent: %s", messageId);
 // 	},
 // };
-
