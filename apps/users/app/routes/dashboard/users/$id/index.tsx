@@ -42,6 +42,7 @@ export default function UserByIdIndex() {
 	return (
 		<Content>
 			<UserForm userImpersonated={user} />
+			
 		</Content>
 	);
 }

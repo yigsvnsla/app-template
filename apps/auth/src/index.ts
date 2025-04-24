@@ -1,15 +1,13 @@
 import cors from "@elysiajs/cors";
+import swagger from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import logixlysia from "logixlysia";
 import { betterAuth } from "../middleware/auth.middleware";
 
-
-console.log("ENV",process.env.APP_ADMIN_ORIGIN);
-
-
 const app = new Elysia()
 	.use(betterAuth)
 	.use(logixlysia())
+	.use(swagger())
 	.use(
 		cors({
 			origin: [process.env.APP_ADMIN_ORIGIN],

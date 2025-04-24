@@ -2,6 +2,7 @@ import { join } from "node:path";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { betterAuth } from "better-auth";
 import { admin, openAPI } from "better-auth/plugins";
+import { ac, roles } from "./permissions";
 
 export const auth = betterAuth({
 	database: new LibsqlDialect({
@@ -10,7 +11,12 @@ export const auth = betterAuth({
 	trustedOrigins: [process.env.APP_ADMIN_ORIGIN],
 	plugins: [
 		//  magicLink(magicLinkOptions),
-		admin(),
+		admin({
+			ac,
+			roles,
+			defaultRole: "user",
+			adminRoles: ["admin"],
+		}),
 		openAPI(),
 	],
 	emailAndPassword: { enabled: true, requireEmailVerification: true },
