@@ -15,7 +15,7 @@
     "@elysiajs/swagger": "^1.2.2",
     "@libsql/client": "^0.15.4",
     "@libsql/kysely-libsql": "^0.4.1",
-    "better-auth": "1.2.8-beta.2",
+    "better-auth": "^1.2.8-beta.2",
     "elysia": "latest",
     "logixlysia": "^4.2.7"
   },

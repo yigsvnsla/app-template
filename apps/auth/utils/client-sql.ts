@@ -7,8 +7,6 @@ import { Kysely } from "kysely";
 import type { DB } from "../database/better-auth-db";
 // https://github.com/tursodatabase/kysely-libsql/issues/12
 
-console.log();
-
 export const BetterAuthDbClient = new Kysely<DB>({
 	dialect: new LibsqlDialect({
 		url: `file:${join(__dirname, "..", "/database/better-auth.sqlite")}`,

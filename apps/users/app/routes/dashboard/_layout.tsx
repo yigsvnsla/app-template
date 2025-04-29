@@ -1,32 +1,24 @@
-import { $betterAuthClient } from "@package/clients/better-auth.client";
+import { betterAuthClient } from "@package/clients/better-auth.client";
+import { ApiPaths as BetterAuthApiPaths } from "@package/clients/better-auth.openapi";
 import { SidebarInset, SidebarProvider } from "@package/ui/components/sidebar";
-import { Outlet } from "react-router";
-import { AppSidebar } from "~/components/app-sidebar";
-import { SiteHeader } from "~/components/site-header";
+import { Outlet, redirect } from "react-router";
+import { AppSidebar } from "~/routes/dashboard/-components/app-sidebar";
+import ScreenLoader from "~/routes/dashboard/-components/screen-loader";
+import { SiteHeader } from "~/routes/dashboard/-components/site-header";
 
 export async function clientLoader() {
+  const { data } = await betterAuthClient.GET(BetterAuthApiPaths.GetGetsession);
 
+  if (!data || !data.user) {
+    throw redirect("/auth/sign-in");
+  }
 
-	// $betterAuthClient.useQuery("get", ApiPaths.GetGetsession, {
-	// 	onSuccess: (data) => {
-	// 		console.log(data);
-
-	// 		// 	storeSetToken(null);
-	// 		// 	storeSetUser(null);
-	// 		// 	navigate("/auth/sign-in");
-	// 	},
-	// });
-
-	// During client-side navigations, we hit our exposed API endpoints directly
-	return { $betterAuthClient };
+  return data;
 }
 
-
-// HydrateFallback is rendered while the client loader is running
 export function HydrateFallback() {
-  return <div>Loading...</div>;
+	return <ScreenLoader />;
 }
-
 
 export default function DashboardLayout() {
 	return (

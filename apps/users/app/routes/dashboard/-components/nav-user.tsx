@@ -1,14 +1,8 @@
 "use client";
 
-import {
-	BellIcon,
-	CreditCardIcon,
-	LogOutIcon,
-	MoreVerticalIcon,
-	UserCircleIcon,
-} from "lucide-react";
-
+import { $betterAuthClient } from "@package/clients/better-auth.client";
 import { ApiPaths } from "@package/clients/better-auth.openapi";
+import type { components } from "@package/clients/better-auth.openapi";
 import {
 	Avatar,
 	AvatarFallback,
@@ -32,36 +26,34 @@ import {
 import { toast } from "@package/ui/components/sonner";
 import { Spinner } from "@package/ui/components/spinner";
 import { getAvatarInitials } from "@package/ui/lib/utils";
+import {
+	BellIcon,
+	CreditCardIcon,
+	LogOutIcon,
+	MoreVerticalIcon,
+	UserCircleIcon,
+} from "lucide-react";
 import { useLoaderData, useNavigate } from "react-router";
 import type { clientLoader } from "~/routes/dashboard/_layout";
-import { useAuthStore } from "~/stores/use-auth.store";
-
-
-
-
 
 export default function NavUser() {
-	const { $betterAuthClient } =
-		useLoaderData<Awaited<ReturnType<typeof clientLoader>>>();
-
 	const { isMobile } = useSidebar();
 	const navigate = useNavigate();
-	const user = useAuthStore((s) => s.user);
-	const storeSetToken = useAuthStore((s) => s.setToken);
-	const storeSetUser = useAuthStore((s) => s.setUser);
+
+	const loaderdata = useLoaderData<Awaited<ReturnType<typeof clientLoader>>>();
+	const user = loaderdata?.user;
 
 	const { mutateAsync, isPending } = $betterAuthClient.useMutation(
 		"post",
 		ApiPaths.PostSignout,
 		{
 			onSuccess: (data) => {
-				storeSetToken(null);
-				storeSetUser(null);
+				// storeSetToken(null);
+				// storeSetUser(null);
 				navigate("/auth/sign-in");
 			},
 		},
 	);
-
 
 	const handleLogout = async () => {
 		toast.promise(mutateAsync({}), {
@@ -84,9 +76,9 @@ export default function NavUser() {
 									className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 								>
 									<Avatar className="h-8 w-8 rounded-lg grayscale">
-										<AvatarImage src={user.avatar} alt={user.name} />
+										<AvatarImage src={user.image} alt={user.name} />
 										<AvatarFallback className="rounded-lg">
-											{getAvatarInitials(user.name)}
+											{getAvatarInitials(user.name ?? "")}
 										</AvatarFallback>
 									</Avatar>
 									<div className="grid flex-1 text-left text-sm leading-tight">
@@ -107,9 +99,9 @@ export default function NavUser() {
 								<DropdownMenuLabel className="p-0 font-normal">
 									<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 										<Avatar className="h-8 w-8 rounded-lg">
-											<AvatarImage src={user.avatar} alt={user.name} />
+											<AvatarImage src={user.image} alt={user.name} />
 											<AvatarFallback className="rounded-lg">
-												{getAvatarInitials(user.name)}
+												{getAvatarInitials(user.name ?? "")}
 											</AvatarFallback>
 										</Avatar>
 										<div className="grid flex-1 text-left text-sm leading-tight">

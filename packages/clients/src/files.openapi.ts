@@ -4,37 +4,53 @@
  */
 
 export interface paths {
-    "/files/upload": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    readonly "/files/upload": {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path?: never;
+            readonly cookie?: never;
         };
-        get?: never;
-        put?: never;
-        post: operations["postFilesUpload"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+        readonly get?: never;
+        readonly put?: never;
+        readonly post: operations["postFilesUpload"];
+        readonly delete?: never;
+        readonly options?: never;
+        readonly head?: never;
+        readonly patch?: never;
+        readonly trace?: never;
     };
-    "/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    readonly "/todo": {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path?: never;
+            readonly cookie?: never;
         };
-        get: operations["getIndex"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+        readonly get: operations["getTodo"];
+        readonly put?: never;
+        readonly post: operations["postTodo"];
+        readonly delete?: never;
+        readonly options?: never;
+        readonly head?: never;
+        readonly patch?: never;
+        readonly trace?: never;
+    };
+    readonly "/todo/{id}": {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path?: never;
+            readonly cookie?: never;
+        };
+        readonly get: operations["getTodoById"];
+        readonly put: operations["putTodoById"];
+        readonly post?: never;
+        readonly delete: operations["deleteTodoById"];
+        readonly options?: never;
+        readonly head?: never;
+        readonly patch?: never;
+        readonly trace?: never;
     };
 }
 export type webhooks = Record<string, never>;
@@ -48,30 +64,30 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    postFilesUpload: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    readonly postFilesUpload: {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path?: never;
+            readonly cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": {
+        readonly requestBody: {
+            readonly content: {
+                readonly "application/json": {
                     /**
                      * Format: binary
                      * @default File
                      */
                     readonly file: string;
                 };
-                "multipart/form-data": {
+                readonly "multipart/form-data": {
                     /**
                      * Format: binary
                      * @default File
                      */
                     readonly file: string;
                 };
-                "text/plain": {
+                readonly "text/plain": {
                     /**
                      * Format: binary
                      * @default File
@@ -80,43 +96,185 @@ export interface operations {
                 };
             };
         };
-        responses: {
-            200: {
+        readonly responses: {
+            readonly 200: {
                 headers: {
-                    [name: string]: unknown;
+                    readonly [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        success: boolean;
-                        path: string;
-                        id: string;
+                    readonly "application/json": {
+                        readonly success: boolean;
+                        readonly path: string;
+                        readonly id: string;
                     };
-                    "multipart/form-data": {
-                        success: boolean;
-                        path: string;
-                        id: string;
+                    readonly "multipart/form-data": {
+                        readonly success: boolean;
+                        readonly path: string;
+                        readonly id: string;
                     };
-                    "text/plain": {
-                        success: boolean;
-                        path: string;
-                        id: string;
+                    readonly "text/plain": {
+                        readonly success: boolean;
+                        readonly path: string;
+                        readonly id: string;
                     };
                 };
             };
         };
     };
-    getIndex: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    readonly getTodo: {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path?: never;
+            readonly cookie?: never;
         };
-        requestBody?: never;
-        responses: {
-            200: {
+        readonly requestBody?: never;
+        readonly responses: {
+            readonly 200: {
                 headers: {
-                    [name: string]: unknown;
+                    readonly [name: string]: unknown;
+                };
+                content: {
+                    readonly "application/json": readonly {
+                        readonly id: string;
+                        readonly title: string;
+                        readonly completed: boolean;
+                    }[];
+                    readonly "multipart/form-data": readonly {
+                        readonly id: string;
+                        readonly title: string;
+                        readonly completed: boolean;
+                    }[];
+                    readonly "text/plain": readonly {
+                        readonly id: string;
+                        readonly title: string;
+                        readonly completed: boolean;
+                    }[];
+                };
+            };
+        };
+    };
+    readonly postTodo: {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path?: never;
+            readonly cookie?: never;
+        };
+        readonly requestBody: {
+            readonly content: {
+                readonly "application/json": {
+                    readonly id: string;
+                    readonly title: string;
+                    readonly completed: boolean;
+                };
+                readonly "multipart/form-data": {
+                    readonly id: string;
+                    readonly title: string;
+                    readonly completed: boolean;
+                };
+                readonly "text/plain": {
+                    readonly id: string;
+                    readonly title: string;
+                    readonly completed: boolean;
+                };
+            };
+        };
+        readonly responses: {
+            readonly 200: {
+                headers: {
+                    readonly [name: string]: unknown;
+                };
+                content: {
+                    readonly "application/json": {
+                        readonly id: string;
+                        readonly title: string;
+                        readonly completed: boolean;
+                    };
+                    readonly "multipart/form-data": {
+                        readonly id: string;
+                        readonly title: string;
+                        readonly completed: boolean;
+                    };
+                    readonly "text/plain": {
+                        readonly id: string;
+                        readonly title: string;
+                        readonly completed: boolean;
+                    };
+                };
+            };
+        };
+    };
+    readonly getTodoById: {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path: {
+                readonly id: string;
+            };
+            readonly cookie?: never;
+        };
+        readonly requestBody?: never;
+        readonly responses: {
+            readonly 200: {
+                headers: {
+                    readonly [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    readonly putTodoById: {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path: {
+                readonly id: string;
+            };
+            readonly cookie?: never;
+        };
+        readonly requestBody: {
+            readonly content: {
+                readonly "application/json": {
+                    readonly id: string;
+                    readonly title: string;
+                    readonly completed: boolean;
+                };
+                readonly "multipart/form-data": {
+                    readonly id: string;
+                    readonly title: string;
+                    readonly completed: boolean;
+                };
+                readonly "text/plain": {
+                    readonly id: string;
+                    readonly title: string;
+                    readonly completed: boolean;
+                };
+            };
+        };
+        readonly responses: {
+            readonly 200: {
+                headers: {
+                    readonly [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    readonly deleteTodoById: {
+        readonly parameters: {
+            readonly query?: never;
+            readonly header?: never;
+            readonly path: {
+                readonly id: string;
+            };
+            readonly cookie?: never;
+        };
+        readonly requestBody?: never;
+        readonly responses: {
+            readonly 200: {
+                headers: {
+                    readonly [name: string]: unknown;
                 };
                 content?: never;
             };
@@ -125,5 +283,9 @@ export interface operations {
 }
 export enum ApiPaths {
     postFilesUpload = "/files/upload",
-    getIndex = "/"
+    getTodo = "/todo",
+    postTodo = "/todo",
+    getTodoById = "/todo/:id",
+    putTodoById = "/todo/:id",
+    deleteTodoById = "/todo/:id"
 }

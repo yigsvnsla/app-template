@@ -23,6 +23,7 @@ export interface Session {
   createdAt: string;
   expiresAt: string;
   id: string;
+  impersonatedBy: string | null;
   ipAddress: string | null;
   token: string;
   updatedAt: string;
@@ -31,12 +32,16 @@ export interface Session {
 }
 
 export interface User {
+  banExpires: string | null;
+  banned: number | null;
+  banReason: string | null;
   createdAt: string;
   email: string;
   emailVerified: number;
   id: string;
   image: string | null;
   name: string;
+  role: string | null;
   updatedAt: string;
 }
 

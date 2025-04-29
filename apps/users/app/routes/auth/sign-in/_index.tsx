@@ -48,8 +48,6 @@ export function SignInIndex() {
 		ApiPaths.PostSigninEmail,
 		{
 			onSuccess: (data) => {
-				storeSetToken(data.token);
-				storeSetUser(data.user);
 				navigate("/dashboard");
 			},
 		},

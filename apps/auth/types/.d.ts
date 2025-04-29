@@ -7,6 +7,7 @@ declare global {
       BETTER_AUTH_URL: string;
       BETTER_AUTH_TRUSTED_ORIGINS: string;
       APP_ADMIN_ORIGIN: string;
+      APP_FILES_ORIGIN: string;
     }
   }
 }

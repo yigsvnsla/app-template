@@ -30,10 +30,10 @@ import {
 import type React from "react";
 import { memo } from "react";
 import { Link } from "react-router";
-import { NavDocuments } from "~/components/nav-documents";
-import { NavMain } from "~/components/nav-main";
-import { NavSecondary } from "~/components/nav-secondary";
-import NavUser from "~/components/nav-user";
+import { NavDocuments } from "~/routes/dashboard/-components/nav-documents";
+import { NavMain } from "~/routes/dashboard/-components/nav-main";
+import { NavSecondary } from "~/routes/dashboard/-components/nav-secondary";
+import NavUser from "~/routes/dashboard/-components/nav-user";
 const data = {
 	user: {
 		name: "shadcn",
@@ -180,7 +180,7 @@ export const AppSidebar = memo(function AppSidebar({
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain items={data.navMain} />
-				<NavDocuments items={data.documents} />
+				{/* <NavDocuments items={data.documents} /> */}
 				<NavSecondary items={data.navSecondary} className="mt-auto" />
 			</SidebarContent>
 			<SidebarFooter>

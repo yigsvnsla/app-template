@@ -11,7 +11,9 @@
     "typescript": "^5"
   },
   "scripts": {
-    "::generate": "bunx openapi-typescript --make-paths-enum"
+    "::check": "bunx openapi-typescript --check",
+    "::make": "bunx openapi-typescript --make-paths-enum --immutable  --exclude-deprecated --root-types",
+    "::generate" :"bun ::check && bun ::make"
   },
   "dependencies": {
     "openapi-fetch": "^0.13.5",
