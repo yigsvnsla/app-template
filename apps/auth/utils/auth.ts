@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { LibsqlDialect } from '@libsql/kysely-libsql';
 import { betterAuth } from 'better-auth';
 import { admin, createAuthMiddleware, openAPI } from 'better-auth/plugins';
+import { AuditPlugin } from '../plugins/audit.plugin';
 import { ac, roles } from './permissions';
 
 export const auth = betterAuth({
@@ -19,34 +20,12 @@ export const auth = betterAuth({
       partitioned: true, // New browser standards will mandate this for foreign cookies
     },
   },
-  hooks: {
-    before: createAuthMiddleware(async (ctx) => {
-
-      
-      const newSession = ctx.context.newSession;
-      console.log('before', newSession);
-    }),
-
-    after: createAuthMiddleware(async (ctx) => {
-      const newSession = ctx.context.newSession;
-      console.log('after', newSession);
-
-      return;
-      // if (ctx.path !== '/sign-up/email') {
-      //   return;
-      // }
-      // if (!ctx.body?.email.endsWith('@example.com')) {
-      //   throw new APIError('BAD_REQUEST', {
-      //     message: 'Email must end with @example.com',
-      //   });
-      // }
-    }),
-  },
   database: new LibsqlDialect({
     url: `file:${join(__dirname, '../database/better-auth.sqlite')}`,
   }),
   plugins: [
     //  magicLink(magicLinkOptions),
+    AuditPlugin(),
     admin({
       ac,
       roles,
