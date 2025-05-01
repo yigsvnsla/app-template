@@ -1,17 +1,19 @@
+import {} from 'node:fs/promises';
+import { join } from 'node:path';
+import { cwd } from 'node:process';
+
 import type { APIError, BetterAuthPlugin } from 'better-auth';
 import { getSessionFromCtx } from 'better-auth/api';
 import { createAuthMiddleware } from 'better-auth/plugins';
-export function AuditPlugin(): BetterAuthPlugin {
-  return <BetterAuthPlugin>{
+console.log(join(cwd(), 'log'));
+
+export function AuditPlugin() {
+  return {
     id: 'audit-plugin',
 
     schema: {
       audit: {
         fields: {
-          id: {
-            type: 'string',
-            unique: true,
-          },
           user: {
             type: 'string',
             unique: true,
@@ -41,16 +43,19 @@ export function AuditPlugin(): BetterAuthPlugin {
     hooks: {
       after: [
         {
-          matcher: (context) => {
+          matcher: (ctx) => {
             return true;
           },
           handler: createAuthMiddleware(async (ctx) => {
             const session = await getSessionFromCtx(ctx);
-            console.dir(ctx.context);
-
-            const { returned } = ctx.context;
-            console.table({ returned });
-
+            const logger = ctx.context.logger;
+            console.log(
+              await ctx.context.adapter.count({
+                model: 'audit',
+              }),
+            );
+            // console.dir(ctx.context);
+            console.table(ctx.context.returned);
             console.table({
               timestamp: new Date(Date.now()).toISOString(),
               action: (ctx.context.returned as APIError).name,
@@ -59,13 +64,9 @@ export function AuditPlugin(): BetterAuthPlugin {
             });
 
             return;
-            // //do something before the request
-            // return {
-            //   context: ctx, // if you want to modify the context
-            // };
           }),
         },
       ],
     },
-  };
+  } satisfies BetterAuthPlugin;
 }
