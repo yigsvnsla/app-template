@@ -1,201 +1,180 @@
 import {
-	TodoInsertSchema,
-	todoInsertSchema,
-} from "@api/modules/todo/todo.schema";
-import { todoSelectSchema } from "@api/modules/todo/todo.schema";
-import { betterAuthClient } from "@package/clients/better-auth.client";
-import { ApiPaths as BetterAuthApiPaths } from "@package/clients/better-auth.openapi";
-import { Elysia, StatusMap, t } from "elysia";
-import { todoModule } from "./todo.module";
+  TodoInsertSchema,
+  todoInsertSchema,
+} from '@api/modules/todo/todo.schema';
+import { todoSelectSchema } from '@api/modules/todo/todo.schema';
+import { betterAuthClient } from '@package/clients/better-auth.client';
+import { ApiPaths as BetterAuthApiPaths } from '@package/clients/better-auth.openapi';
+import { Elysia, StatusMap, t } from 'elysia';
+import { todoModule } from './todo.module';
 
 export const todoController = new Elysia({
-	name: "TodoController",
-	detail: {
-		tags: ["Todo"],
-	},
+  name: 'TodoController',
+  detail: {
+    tags: ['Todo'],
+  },
 }).group(
-	"todo",
-	(app) =>
-		app
-			.use(todoModule)
-			// Obtener todas las tareas
-			.get(
-				"",
-				async (ctx) => {
-					const { error, data } = await betterAuthClient.POST(
-						BetterAuthApiPaths.PostAdminHaspermission,
-						{
-							headers: ctx.headers,
-							body: {
-								permissions: {
-									todo: ["read"],
-								},
-							},
-						},
-					);
+  'todo',
+  (app) =>
+    app
+      .use(todoModule)
+      // Obtener todas las tareas
+      .get(
+        '',
+        async (ctx) => {
+          return await ctx.todoService.todoList();
+        },
+        {
+          permissionToReadTodos: true,
+          response: {
+            [StatusMap.OK]: t.Array(todoSelectSchema),
+            [StatusMap['Bad Request']]: t.Optional(
+              t.Object({
+                message: t.Optional(t.String()),
+              }),
+            ),
+            [StatusMap.Forbidden]: t.Optional(
+              t.Object({
+                message: t.Optional(t.String()),
+              }),
+            ),
+          },
+        },
+      )
 
-					if (error) {
-						return ctx.error(StatusMap["Bad Request"], error);
-					}
+      // Obtener una tarea por su ID
+      .get(
+        '/:id',
+        async (ctx) => {
+          const { error, data } = await betterAuthClient.POST(
+            BetterAuthApiPaths.PostAdminHaspermission,
+            {
+              headers: ctx.headers,
+              body: {
+                permissions: {
+                  todo: ['read'],
+                },
+              },
+            },
+          );
 
-					if (!data.success) {
-						return ctx.error(StatusMap.Forbidden, {
-							message: "NO TIENES PERMISOS PARA ESTE METODO",
-						});
-					}
+          if (error) {
+            return ctx.error(StatusMap['Bad Request'], error);
+          }
 
-					return await ctx.todoService.todoList();
-				},
-				{
-					response: {
-						[StatusMap.OK]: t.Array(todoSelectSchema),
-						[StatusMap["Bad Request"]]: t.Optional(
-							t.Object({
-								message: t.Optional(t.String()),
-							}),
-						),
-						[StatusMap.Forbidden]: t.Optional(
-							t.Object({
-								message: t.Optional(t.String()),
-							}),
-						),
-					},
-				},
-			)
+          if (!data.success) {
+            return ctx.error(StatusMap.Forbidden, {
+              message: 'NO TIENES PERMISOS PARA ESTE METODO',
+            });
+          }
 
-			// Obtener una tarea por su ID
-			.get(
-				"/:id",
-				async (ctx) => {
-					const { error, data } = await betterAuthClient.POST(
-						BetterAuthApiPaths.PostAdminHaspermission,
-						{
-							headers: ctx.headers,
-							body: {
-								permissions: {
-									todo: ["read"],
-								},
-							},
-						},
-					);
+          return await ctx.todoService.todoById(ctx.params.id);
+        },
+        {
+          params: t.Object({
+            id: t.String(),
+          }),
+          response: {
+            [StatusMap.OK]: todoSelectSchema,
+            [StatusMap['Bad Request']]: t.Optional(
+              t.Object({
+                message: t.Optional(t.String()),
+              }),
+            ),
+            [StatusMap.Forbidden]: t.Optional(
+              t.Object({
+                message: t.Optional(t.String()),
+              }),
+            ),
+          },
+        },
+      )
 
-					if (error) {
-						return ctx.error(StatusMap["Bad Request"], error);
-					}
+      // Crear una nueva tarea
+      .post(
+        '',
+        async (ctx) => {
+          const { error, data } = await betterAuthClient.POST(
+            BetterAuthApiPaths.PostAdminHaspermission,
+            {
+              headers: ctx.headers,
+              body: {
+                permissions: {
+                  todo: ['create'],
+                },
+              },
+            },
+          );
 
-					if (!data.success) {
-						return ctx.error(StatusMap.Forbidden, {
-							message: "NO TIENES PERMISOS PARA ESTE METODO",
-						});
-					}
+          if (error) {
+            return ctx.error(StatusMap['Bad Request'], error);
+          }
 
-					return await ctx.todoService.todoById(ctx.params.id);
-				},
-				{
-					params: t.Object({
-						id: t.String(),
-					}),
-					response: {
-						[StatusMap.OK]: todoSelectSchema,
-						[StatusMap["Bad Request"]]: t.Optional(
-							t.Object({
-								message: t.Optional(t.String()),
-							}),
-						),
-						[StatusMap.Forbidden]: t.Optional(
-							t.Object({
-								message: t.Optional(t.String()),
-							}),
-						),
-					},
-				},
-			)
+          if (!data.success) {
+            return ctx.error(StatusMap.Forbidden, {
+              message: 'NO TIENES PERMISOS PARA ESTE METODO',
+            });
+          }
 
-			// Crear una nueva tarea
-			.post(
-				"",
-				async (ctx) => {
-					const { error, data } = await betterAuthClient.POST(
-						BetterAuthApiPaths.PostAdminHaspermission,
-						{
-							headers: ctx.headers,
-							body: {
-								permissions: {
-									todo: ["create"],
-								},
-							},
-						},
-					);
+          return await ctx.todoService.createTodo(ctx.body);
+        },
+        {
+          params: t.Object({
+            id: t.String(),
+          }),
+          body: todoInsertSchema,
+          response: {
+            [StatusMap.OK]: todoSelectSchema,
+            [StatusMap['Bad Request']]: t.Optional(
+              t.Object({
+                message: t.Optional(t.String()),
+              }),
+            ),
+            [StatusMap.Forbidden]: t.Optional(
+              t.Object({
+                message: t.Optional(t.String()),
+              }),
+            ),
+          },
+        },
+      ),
+  // // Actualizar una tarea existente
+  // .put(
+  // 	"/:id",
+  // 	async ({ params, body }) => {
+  // 		const index = todos.findIndex((t) => t.id === params.id);
+  // 		if (index === -1) return { error: "Tarea no encontrada" };
 
-					if (error) {
-						return ctx.error(StatusMap["Bad Request"], error);
-					}
+  // 		const { title, completed } = body;
+  // 		todos[index] = {
+  // 			...todos[index],
+  // 			title: title ?? todos[index].title,
+  // 			completed: completed ?? todos[index].completed,
+  // 		};
+  // 		return todos[index];
+  // 	},
+  // 	{
+  // 		params: elysia.t.Object({
+  // 			id: elysia.t.String(),
+  // 		}),
+  // 		body: TodoSchema,
+  // 	},
+  // )
 
-					if (!data.success) {
-						return ctx.error(StatusMap.Forbidden, {
-							message: "NO TIENES PERMISOS PARA ESTE METODO",
-						});
-					}
+  // // Eliminar una tarea
+  // .delete(
+  // 	"/:id",
+  // 	({ params }) => {
+  // 		const index = todos.findIndex((t) => t.id === params.id);
+  // 		if (index === -1) return { error: "Tarea no encontrada" };
 
-					return await ctx.todoService.createTodo(ctx.body);
-				},
-				{
-					params: t.Object({
-						id: t.String(),
-					}),
-					body: todoInsertSchema,
-					response: {
-						[StatusMap.OK]: todoSelectSchema,
-						[StatusMap["Bad Request"]]: t.Optional(
-							t.Object({
-								message: t.Optional(t.String()),
-							}),
-						),
-						[StatusMap.Forbidden]: t.Optional(
-							t.Object({
-								message: t.Optional(t.String()),
-							}),
-						),
-					},
-				},
-			),
-	// // Actualizar una tarea existente
-	// .put(
-	// 	"/:id",
-	// 	async ({ params, body }) => {
-	// 		const index = todos.findIndex((t) => t.id === params.id);
-	// 		if (index === -1) return { error: "Tarea no encontrada" };
-
-	// 		const { title, completed } = body;
-	// 		todos[index] = {
-	// 			...todos[index],
-	// 			title: title ?? todos[index].title,
-	// 			completed: completed ?? todos[index].completed,
-	// 		};
-	// 		return todos[index];
-	// 	},
-	// 	{
-	// 		params: elysia.t.Object({
-	// 			id: elysia.t.String(),
-	// 		}),
-	// 		body: TodoSchema,
-	// 	},
-	// )
-
-	// // Eliminar una tarea
-	// .delete(
-	// 	"/:id",
-	// 	({ params }) => {
-	// 		const index = todos.findIndex((t) => t.id === params.id);
-	// 		if (index === -1) return { error: "Tarea no encontrada" };
-
-	// 		const removed = todos.splice(index, 1);
-	// 		return removed[0];
-	// 	},
-	// 	{
-	// 		params: elysia.t.Object({
-	// 			id: elysia.t.String(),
-	// 		}),
-	// 	},
-	// ),
+  // 		const removed = todos.splice(index, 1);
+  // 		return removed[0];
+  // 	},
+  // 	{
+  // 		params: elysia.t.Object({
+  // 			id: elysia.t.String(),
+  // 		}),
+  // 	},
+  // ),
 );

@@ -1,13 +1,19 @@
-import {} from 'node:fs/promises';
+import { exists, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { cwd } from 'node:process';
 
-import type { APIError, BetterAuthPlugin } from 'better-auth';
+import type { BetterAuthPlugin } from 'better-auth';
+import { APIError } from 'better-auth/api';
 import { getSessionFromCtx } from 'better-auth/api';
 import { createAuthMiddleware } from 'better-auth/plugins';
-console.log(join(cwd(), 'log'));
 
-export function AuditPlugin() {
+export interface AuditPluginOptions {
+  path: string | string[];
+}
+
+export function AuditPlugin(
+  opts = { path: ['/.logs'] } satisfies AuditPluginOptions,
+) {
   return {
     id: 'audit-plugin',
 
@@ -44,24 +50,24 @@ export function AuditPlugin() {
       after: [
         {
           matcher: (ctx) => {
-            return true;
+            return (
+              ctx.request?.url.includes(`${ctx.context.options.basePath}`) ??
+              false
+            );
           },
           handler: createAuthMiddleware(async (ctx) => {
-            const session = await getSessionFromCtx(ctx);
-            const logger = ctx.context.logger;
-            console.log(
-              await ctx.context.adapter.count({
-                model: 'audit',
-              }),
-            );
-            // console.dir(ctx.context);
-            console.table(ctx.context.returned);
-            console.table({
-              timestamp: new Date(Date.now()).toISOString(),
-              action: (ctx.context.returned as APIError).name,
-              resource: ctx.path,
-              user: session?.user.id,
-            });
+            if (ctx.context.returned instanceof APIError) {
+              if (ctx.context.returned.statusCode >= 400) {
+                ctx.context.logger.error(
+                  `(${ctx.context.returned.name}: ${ctx.path}) ${ctx.context.returned.body?.code} | ${ctx.context.returned.body?.message}`,
+                );
+              }
+            } else {
+              const session = await getSessionFromCtx(ctx);
+              ctx.context.logger.success(
+                `(${session?.user.id ?? 'OUT USER'}: ${ctx.path})`,
+              );
+            }
 
             return;
           }),
@@ -70,3 +76,27 @@ export function AuditPlugin() {
     },
   } satisfies BetterAuthPlugin;
 }
+
+// writeLogs();
+// console.log(
+//   await ctx.context.adapter.count({
+//     model: 'audit',
+//   }),
+// );
+
+// console.table({
+//   timestamp: new Date(Date.now()).toISOString(),
+//   action: (ctx.context.returned as APIError).name,
+//   resource: ctx.path,
+//   user: session?.user.id,
+// });
+
+// function writeLogs() {
+//   const pathLog = join(
+//     cwd(),
+//     ...(Array.isArray(opts.path) ? opts.path : [opts.path]),
+//   );
+//   if (!exists(pathLog)) mkdir(pathLog);
+// }
+
+// writeLogs();

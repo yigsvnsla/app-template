@@ -30,7 +30,7 @@
 			".env*": "dotenv",
 			"*.css": "tailwindcss"
 		},
-		"openapi-docs-viewer.defaultRenderer": "swagger",
+		"openapi-docs-viewer.defaultRenderer": "elements",
 	},
 	"extensions": {
 		"recommendations": []

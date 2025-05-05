@@ -1,7 +1,7 @@
 import '../types/.d.ts';
 import { join } from 'node:path';
 import { LibsqlDialect } from '@libsql/kysely-libsql';
-import { betterAuth } from 'better-auth';
+import { betterAuth, logger } from 'better-auth';
 import { admin, createAuthMiddleware, openAPI } from 'better-auth/plugins';
 import { AuditPlugin } from '../plugins/audit.plugin';
 import { ac, roles } from './permissions';
@@ -23,6 +23,10 @@ export const auth = betterAuth({
   database: new LibsqlDialect({
     url: `file:${join(__dirname, '../database/better-auth.sqlite')}`,
   }),
+  logger: {
+    disabled: false,
+    level: 'debug',
+  },
   plugins: [
     //  magicLink(magicLinkOptions),
     AuditPlugin(),
@@ -34,8 +38,10 @@ export const auth = betterAuth({
     }),
     openAPI(),
   ],
+  onAPIError: {
+    throw: true,
+  },
   emailAndPassword: { enabled: true, requireEmailVerification: true },
-  logger: { disabled: false },
   // emailVerification: emailVerificationOptions,
 });
 
