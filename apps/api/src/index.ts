@@ -2,7 +2,6 @@ import cors from '@elysiajs/cors';
 import { staticPlugin } from '@elysiajs/static';
 import { swagger } from '@elysiajs/swagger';
 import { Elysia } from 'elysia';
-import logixlysia from 'logixlysia';
 import { upload } from './upload';
 import '../types/.d.ts';
 import { logger } from '@bogeychan/elysia-logger';
@@ -17,7 +16,6 @@ const app = new Elysia()
       allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   )
-  // .use(logixlysia)
   .use(
     logger({
       transport: {

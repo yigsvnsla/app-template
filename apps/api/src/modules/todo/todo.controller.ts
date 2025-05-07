@@ -1,11 +1,9 @@
-import {
-  TodoInsertSchema,
-  todoInsertSchema,
-} from '@api/modules/todo/todo.schema';
+import { TodoSchema, createTodoSchema } from '@api/modules/todo/todo.schema';
 import { todoSelectSchema } from '@api/modules/todo/todo.schema';
-import { betterAuthClient } from '@package/clients/better-auth.client';
-import { ApiPaths as BetterAuthApiPaths } from '@package/clients/better-auth.openapi';
+
+import { paginationQuerySchema } from '@api/common/schemas/pagination.schema';
 import { Elysia, StatusMap, t } from 'elysia';
+import { TodoExeption, TodoStatusMapErrors } from './todo.error';
 import { todoModule } from './todo.module';
 
 export const todoController = new Elysia({
@@ -17,15 +15,29 @@ export const todoController = new Elysia({
   'todo',
   (app) =>
     app
+      .error({ TodoExeption })
+      .onError((ctx) => {
+        if (ctx.error instanceof TodoExeption) {
+          ctx.set.status = ctx.error.statusCode;
+          return {
+            status: ctx.error.statusCode,
+            name: ctx.error.name,
+            message: ctx.error.message,
+          };
+        }
+      })
       .use(todoModule)
       // Obtener todas las tareas
       .get(
         '',
         async (ctx) => {
+          ctx.query.
+
           return await ctx.todoService.todoList();
         },
         {
-          permissionToReadTodos: true,
+          permissionToReadTodos: false,
+          query: paginationQuerySchema(todoSelectSchema),
           response: {
             [StatusMap.OK]: t.Array(todoSelectSchema),
             [StatusMap['Bad Request']]: t.Optional(
@@ -46,46 +58,15 @@ export const todoController = new Elysia({
       .get(
         '/:id',
         async (ctx) => {
-          const { error, data } = await betterAuthClient.POST(
-            BetterAuthApiPaths.PostAdminHaspermission,
-            {
-              headers: ctx.headers,
-              body: {
-                permissions: {
-                  todo: ['read'],
-                },
-              },
-            },
-          );
-
-          if (error) {
-            return ctx.error(StatusMap['Bad Request'], error);
-          }
-
-          if (!data.success) {
-            return ctx.error(StatusMap.Forbidden, {
-              message: 'NO TIENES PERMISOS PARA ESTE METODO',
-            });
-          }
-
-          return await ctx.todoService.todoById(ctx.params.id);
+          return ctx.todoService.todoById(ctx.params.id);
         },
         {
           params: t.Object({
             id: t.String(),
           }),
           response: {
-            [StatusMap.OK]: todoSelectSchema,
-            [StatusMap['Bad Request']]: t.Optional(
-              t.Object({
-                message: t.Optional(t.String()),
-              }),
-            ),
-            [StatusMap.Forbidden]: t.Optional(
-              t.Object({
-                message: t.Optional(t.String()),
-              }),
-            ),
+            [StatusMap.OK]: TodoSchema,
+            ...TodoStatusMapErrors,
           },
         },
       )
@@ -94,37 +75,12 @@ export const todoController = new Elysia({
       .post(
         '',
         async (ctx) => {
-          const { error, data } = await betterAuthClient.POST(
-            BetterAuthApiPaths.PostAdminHaspermission,
-            {
-              headers: ctx.headers,
-              body: {
-                permissions: {
-                  todo: ['create'],
-                },
-              },
-            },
-          );
-
-          if (error) {
-            return ctx.error(StatusMap['Bad Request'], error);
-          }
-
-          if (!data.success) {
-            return ctx.error(StatusMap.Forbidden, {
-              message: 'NO TIENES PERMISOS PARA ESTE METODO',
-            });
-          }
-
           return await ctx.todoService.createTodo(ctx.body);
         },
         {
-          params: t.Object({
-            id: t.String(),
-          }),
-          body: todoInsertSchema,
+          body: t.Array(createTodoSchema),
           response: {
-            [StatusMap.OK]: todoSelectSchema,
+            [StatusMap.OK]: t.Array(TodoSchema),
             [StatusMap['Bad Request']]: t.Optional(
               t.Object({
                 message: t.Optional(t.String()),
