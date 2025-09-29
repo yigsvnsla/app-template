@@ -1,50 +1,60 @@
-import '../types/.d.ts';
-import { join } from 'node:path';
-import { LibsqlDialect } from '@libsql/kysely-libsql';
-import { betterAuth, logger } from 'better-auth';
-import { admin, createAuthMiddleware, openAPI } from 'better-auth/plugins';
-import { AuditPlugin } from '../plugins/audit.plugin';
-import { ac, roles } from './permissions';
+import { betterAuth } from 'better-auth';
+import { openapiPlugin } from '../plugins/openapi-plugin.js';
+import { organizationPlugin } from '../plugins/organization-plugin.js';
+import { databasePlugin } from '../plugins/database-plugin.js';
+import { bearerPlugin } from '../plugins/bearer-plugin.js';
+
 
 export const auth = betterAuth({
-  trustedOrigins: [process.env.APP_ADMIN_ORIGIN, process.env.APP_FILES_ORIGIN],
+  database: databasePlugin,
+  basePath: process.env.BETTER_AUTH_PATH,
+  secret: process.env.BETTER_AUTH_SECRET,
+  trustedOrigins: [
+    process.env.APP_ADMIN_ORIGIN || '',
+    process.env.APP_FILES_ORIGIN || ''
+  ],
+  emailAndPassword: {
+    enabled: true,
+    autoSignIn: false,
+    requireEmailVerification: false,
+  },
   advanced: {
     crossSubDomainCookies: {
       enabled: true,
-      // domain: '.example.com', // Domain with a leading period
     },
     defaultCookieAttributes: {
       secure: true,
       httpOnly: true,
-      sameSite: 'Lax', // Allows CORS-based cookie sharing across subdomains
-      partitioned: true, // New browser standards will mandate this for foreign cookies
+      sameSite: 'Lax',
+      partitioned: true
     },
   },
-  database: new LibsqlDialect({
-    url: `file:${join(__dirname, '../database/better-auth.sqlite')}`,
-  }),
   logger: {
     disabled: false,
     level: 'debug',
   },
-  plugins: [
-    //  magicLink(magicLinkOptions),
-    AuditPlugin(),
-    admin({
-      ac,
-      roles,
-      defaultRole: 'user',
-      adminRoles: ['admin'],
-    }),
-    openAPI(),
-  ],
   onAPIError: {
     throw: true,
   },
-  emailAndPassword: { enabled: true, requireEmailVerification: true },
-  // emailVerification: emailVerificationOptions,
+  plugins: [
+    openapiPlugin,
+    organizationPlugin,
+    bearerPlugin
+  ],
 });
 
+
+// admin({
+//   ac,
+//   roles,
+//   defaultRole: 'user',
+//   adminRoles: ['admin'],
+// }),
+
+
+
+//  magicLink(magicLinkOptions),
+// emailVerification: emailVerificationOptions,
 // type MagicLinkOptions = Parameters<typeof magicLink>["0"];
 // type EmailVerificationOptions = BetterAuthOptions["emailVerification"];
 

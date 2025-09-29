@@ -4,24 +4,26 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "::generate": "bun run ::generate-schemas-auth && bun run ::generate-types-env && bun run ::generate-types-database",
+    "::generate-db": "bun run ::generate-schemas-auth && bun run ::generate-types-env && bun run ::generate-types-database",
     "::migrate": "bunx @better-auth/cli@latest migrate --y",
-    "::generate-schemas-auth": "bunx @better-auth/cli@latest generate --y",
+    "::generate": "bunx @better-auth/cli@latest generate --y",
     "::generate-types-env": "bunx gen-env-types ./.env -o ./types/.d.ts",
     "::generate-types-database": "bunx kysely-codegen --out-file ./database/better-auth-db.d.ts --url file:./database/better-auth.sqlite --dialect libsql"
   },
   "dependencies": {
-    "@elysiajs/cors": "^1.2.0",
-    "@elysiajs/swagger": "^1.2.2",
-    "@libsql/client": "^0.15.4",
+    "@elysiajs/cors": "^1.4.0",
+    "@elysiajs/openapi": "^1.4.9",
+    "@libsql/client": "^0.15.15",
     "@libsql/kysely-libsql": "^0.4.1",
-    "better-auth": "^1.2.8-beta.2",
-    "elysia": "latest",
-    "logixlysia": "^4.2.7"
+    "@prisma/client": "^6.16.2",
+    "@types/node": "^24.5.2",
+    "better-auth": "^1.3.13",
+    "elysia": "^1.4.6",
+    "logestic": "^1.2.4",
+    "prisma": "^6.16.2"
   },
   "devDependencies": {
-    "bun-types": "latest",
-    "kysely-codegen": "^0.18.3"
+    "bun-types": "latest"
   },
   "module": "src/index.js"
 }

@@ -2,7 +2,8 @@ import MailDev from "maildev";
 
 // Define a route for the base path
 const maildev = new MailDev({
-	smtp: 1025,
+	smtp: 1026,
+	web: 1081,
 });
 
 // Maildev now running on localhost:1080/maildev

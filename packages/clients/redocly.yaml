@@ -1,9 +1,0 @@
-apis:
-  better-auth@v1:
-    root: http://localhost:8888/api/auth/open-api/generate-schema
-    x-openapi-ts:
-      output: ./src/better-auth.openapi.ts
-  files@v1:
-    root: http://localhost:4343/swagger/json
-    x-openapi-ts:
-      output: ./src/files.openapi.ts

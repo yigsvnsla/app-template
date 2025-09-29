@@ -1,0 +1,109 @@
+@BETTER_AUTH_EMAIL = admin-1@example.com
+@BETTER_AUTH_PASSWORD = 123456789
+@BETTER_AUTH_USERNAME= foo bazz
+
+@BETTER_AUTH_PATH = /auth/api
+@BETTER_AUTH_PORT = 8888
+@BETTER_AUTH_HOST = http://localhost
+@BETTER_AUTH_URL = {{BETTER_AUTH_HOST}}:{{BETTER_AUTH_PORT}}{{BETTER_AUTH_PATH}}
+
+@BETTER_AUTH_TOKEN = zweEgYJJGW528MFVFrX9H48rbGno57I5
+
+### User Session
+GET {{BETTER_AUTH_URL}}/get-session HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{BETTER_AUTH_TOKEN}}
+
+### Login 
+POST {{BETTER_AUTH_URL}}/sign-in/email HTTP/1.1
+Content-Type: application/json
+
+{
+  "email":"{{BETTER_AUTH_EMAIL}}",
+  "password":"{{BETTER_AUTH_PASSWORD}}"
+}
+
+### Register
+POST {{BETTER_AUTH_URL}}/sign-up/email HTTP/1.1
+Content-Type: application/json
+
+{
+  "name":"{{BETTER_AUTH_USERNAME}}",
+  "email":"{{BETTER_AUTH_EMAIL}}",
+  "password":"{{BETTER_AUTH_PASSWORD}}"
+}
+
+### Create Organization 
+POST {{BETTER_AUTH_URL}}/organization/create HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{BETTER_AUTH_TOKEN}}
+
+{
+    "name": "My Organization 1", 
+    "slug": "my-org-1",
+    "logo": "https://example.com/logo.png",
+    "keepCurrentActiveOrganization":true
+}
+
+### List Organization
+GET {{BETTER_AUTH_URL}}/organization/list HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{BETTER_AUTH_TOKEN}}
+
+### Get Organization
+GET {{BETTER_AUTH_URL}}/organization/get-full-organization HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{BETTER_AUTH_TOKEN}}
+
+### Add Member to Organization
+POST {{BETTER_AUTH_URL}}/organization/add-member HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{BETTER_AUTH_TOKEN}}
+
+{
+  "userId": "user-id",
+  "role": ["admin", "sale"],
+  "organizationId": "org-id",
+  "teamId": "team-id"
+}
+
+
+### Create Role
+POST {{BETTER_AUTH_URL}}/organization/create-role HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{BETTER_AUTH_TOKEN}}
+
+{
+    "role": "my-role-1",
+    "permission": {
+      "project": ["create", "update", "delete"]
+    },
+    "organizationId": "ko720kdNrK9BNbn201YudZXxUGnXImw2"
+}
+
+
+
+
+### Create Team
+POST {{BETTER_AUTH_URL}}/organization/create-team HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{BETTER_AUTH_TOKEN}}
+
+{
+    "name": "my-team-1",
+    "organizationId": "ko720kdNrK9BNbn201YudZXxUGnXImw2"
+}
+
+### List Team
+GET {{BETTER_AUTH_URL}}/organization/list-teams HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{BETTER_AUTH_TOKEN}}
+
+
+
+
+
+
+
+
+
