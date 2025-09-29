@@ -1,6 +1,6 @@
 import { InvertedStatusMap } from "elysia";
-import type { PaginationDto } from "../schemas/pagination-schema";
-import type { ResponseMetadaDto } from "../schemas/response-metadata-schema";
+import type { PaginationDto } from "@app/auth/schemas/pagination-schema";
+import type { ResponseMetadaDto } from "@app/auth/schemas/response-metadata-schema";
 
 export const metadataHandler = (
   status: keyof InvertedStatusMap,

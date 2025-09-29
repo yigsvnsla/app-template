@@ -1,5 +1,5 @@
 import { type Static, t } from "elysia";
-import { PaginationDto } from "./pagination-schema";
+import { PaginationDto } from "@app/auth/schemas/pagination-schema";
 
 export const ResponseMetadaDto = t.Object({
   // message: t.String(),

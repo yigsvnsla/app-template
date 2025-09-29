@@ -1,5 +1,5 @@
 import { type Static, type TSchema, t } from "elysia";
-import { ResponseMetadaDto } from "./response-metadata-schema";
+import { ResponseMetadaDto } from "@app/auth/schemas/response-metadata-schema";
 
 export const ResponseDto = <T extends TSchema>(schema: T) => {
   return t.Object({

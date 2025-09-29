@@ -1,8 +1,8 @@
 import { betterAuth } from "better-auth";
-import { bearerPlugin } from "../plugins/bearer-plugin.js";
-import { databasePlugin } from "../plugins/database-plugin.js";
-import { openapiPlugin } from "../plugins/openapi-plugin.js";
-import { organizationPlugin } from "../plugins/organization-plugin.js";
+import { bearerPlugin } from "@app/auth/plugins/bearer-plugin.js";
+import { databasePlugin } from "@app/auth/plugins/database-plugin.js";
+import { openapiPlugin } from "@app/auth/plugins/openapi-plugin.js";
+import { organizationPlugin } from "@app/auth/plugins/organization-plugin.js";
 
 export const auth = betterAuth({
   database: databasePlugin,

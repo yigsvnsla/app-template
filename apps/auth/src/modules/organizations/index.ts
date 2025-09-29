@@ -1,14 +1,14 @@
 import Elysia, { StatusMap } from "elysia";
 import Value from "typebox/value";
-import { PrismaClient } from "../../../prisma/generated/client";
+import { PrismaClient } from "@app/auth/prisma/generated/client";
 import {
   OrganizationRenforced,
   OrganizationRenforcedMetadata,
-} from "../../../schemas/organization-schema";
-import { RequestDto } from "../../../schemas/request-schema";
-import { middleware } from "../../../utils/middleware";
-import { paginationHandler } from "../../../utils/pagination";
-import { metadataHandler, responseHandler } from "../../../utils/response";
+} from "@app/auth/schemas/organization-schema";
+import { RequestDto } from "@app/auth/schemas/request-schema";
+import { middleware } from "@app/auth/utils/middleware";
+import { paginationHandler } from "@app/auth/utils/pagination";
+import { metadataHandler, responseHandler } from "@app/auth/utils/response";
 
 type InvitationStatus = "pending" | "accepted" | "rejected" | "canceled"; //! TIPADO TEMPORAL, USAR PRISMABOX
 
