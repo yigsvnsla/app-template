@@ -1,9 +1,9 @@
-import Elysia from 'elysia';
-import { auth } from './auth';
+import Elysia from "elysia";
+import { auth } from "./auth";
 
 // user middleware (compute user and session and pass to routes)
-export const middleware = new Elysia({ name: 'better-auth' })
-  .mount(auth.handler)
+export const middleware = new Elysia({ name: "better-auth" })
+  .mount(auth.handler, { detail: { hide: true } })
   .macro({
     auth: {
       async resolve({ status, request: { headers } }) {
@@ -20,6 +20,6 @@ export const middleware = new Elysia({ name: 'better-auth' })
       },
     },
   })
-  .get('/user', ({ user }) => user, {
-    auth: true
+  .get("/user", ({ user }) => user, {
+    auth: true,
   });

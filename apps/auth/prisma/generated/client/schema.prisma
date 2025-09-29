@@ -14,6 +14,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator prismabox {
+  provider                    = "prismabox"
+  typeboxImportDependencyName = "elysia"
+  typeboxImportVariableName   = "t"
+  inputModel                  = true
+  additionalProperties        = true
+  output                      = "./generated/prismabox"
+}
+
 model User {
   id            String   @id @default(cuid())
   email         String   @unique

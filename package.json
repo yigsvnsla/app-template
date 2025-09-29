@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "shadcn": "bun --filter @packages/ui shadcn",
     "build": "turbo run build",
     "dev": "turbo dev",
     "lint": "biome lint .",
@@ -23,5 +24,12 @@
   "engines": {
     "node": ">=18"
   },
-  "workspaces": ["apps/*", "packages/*"]
+  "packageManager": "bun@1.2.22",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "swr": "^2.3.6"
+  }
 }

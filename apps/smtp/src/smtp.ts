@@ -1,4 +1,3 @@
-// import type { User } from "better-auth";
 // import { createTransport } from "nodemailer";
 
 // export const smtp_transporter = createTransport({

@@ -1,0 +1,86 @@
+import Elysia, { StatusMap } from "elysia";
+import Value from "typebox/value";
+import { PrismaClient } from "../../../prisma/generated/client";
+import {
+  OrganizationRenforced,
+  OrganizationRenforcedMetadata,
+} from "../../../schemas/organization-schema";
+import { RequestDto } from "../../../schemas/request-schema";
+import { middleware } from "../../../utils/middleware";
+import { paginationHandler } from "../../../utils/pagination";
+import { metadataHandler, responseHandler } from "../../../utils/response";
+
+type InvitationStatus = "pending" | "accepted" | "rejected" | "canceled"; //! TIPADO TEMPORAL, USAR PRISMABOX
+
+export const organizationModule = new Elysia({
+  tags: ["Organization"],
+  prefix: "/auth/api",
+})
+  .use(middleware)
+  .get("/organization/stadistics", async () => {
+    const prisma = new PrismaClient();
+
+    // authClient.$Infer.Invitation.status
+
+    const organizationCount = await prisma.organization.count();
+    const membersCount = await prisma.member.count();
+    const ivitationsCount = await prisma.invitation.count({
+      where: {
+        status: "pending" as InvitationStatus,
+      },
+    });
+
+    return {
+      organizations: organizationCount,
+      members: membersCount,
+      invitations: ivitationsCount,
+    };
+  })
+
+  .get(
+    "/organization/list-renforced",
+    async ({ query: { limit, offset } }) => {
+      const prisma = new PrismaClient();
+
+      const organizations = await prisma.organization.findMany({
+        take: limit,
+        skip: offset - 1,
+
+        include: {
+          _count: {
+            select: {
+              members: true,
+              invitations: true,
+              teams: true,
+            },
+          },
+        },
+      });
+
+      console.log({ length: organizations.length }, { limit, offset });
+
+      const organizationsMaped = organizations.map(({ _count, ...org }) => ({
+        ...org,
+        metadata: Value.Parse(OrganizationRenforcedMetadata, JSON.parse(org.metadata ?? "{}")),
+        _count,
+      }));
+
+      const organizationCount = await prisma.organization.count();
+
+      const pagination = paginationHandler(offset, limit, organizationCount);
+      const metadata = metadataHandler(StatusMap.OK, pagination);
+      const response = responseHandler(organizationsMaped, metadata);
+
+      return response;
+    },
+    {
+      auth: true,
+      query: RequestDto(OrganizationRenforced),
+      // response: {
+      //   [StatusMap.OK]: ResponseDto(t.Array(OrganizationRenforced)),
+      //   [StatusMap["Not Found"]]: t.Object({
+      //     error: t.String(),
+      //   }),
+      // },
+    },
+  );

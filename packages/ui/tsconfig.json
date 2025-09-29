@@ -1,3 +1,18 @@
 {
-  "extends": "@packages/config/typescript/shadcn.json"
+  "extends": "@packages/config/typescript/react-library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@packages/ui/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "."
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

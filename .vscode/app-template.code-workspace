@@ -32,9 +32,13 @@
     "postman.settings.dotenv-detection-notification-visibility": false,
     "[jsonc]": {
       "editor.defaultFormatter": "vscode.json-language-features"
-    }
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
   },
   "extensions": {
-    "recommendations": ["biomejs.biome", "imgildev.vscode-auto-barrel"]
+    "recommendations": [
+      "biomejs.biome",
+      "imgildev.vscode-auto-barrel"
+    ]
   }
 }
