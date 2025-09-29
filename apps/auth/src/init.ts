@@ -1,5 +1,5 @@
-import { app } from "@app/auth/src"
 import { logestic } from "@app/auth/plugins/logestic-plugin";
+import { app } from "@app/auth/src";
 
 app.use(logestic).listen(Number.parseInt(process.env.AUTH_SERVER_PORT || "", 10));
 

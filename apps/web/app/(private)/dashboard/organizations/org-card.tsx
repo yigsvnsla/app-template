@@ -9,7 +9,7 @@ import type { authClient } from "@/utils/auth-client";
 
 export const OrganizationCard: FC<
   typeof authClient.$Infer.Organization & { _count: Record<string, string> }
-> = ({ logo, name, slug, _count }) => {
+> = ({ logo, name, slug, _count, id }) => {
   return (
     <Card className='bg-card border-border hover:border-primary/50 transition-colors group'>
       <CardHeader className='pb-4'>
@@ -77,18 +77,18 @@ export const OrganizationCard: FC<
         </div>
         {/* Actions */}
         <div className='flex items-center space-x-2 pt-2'>
-          <Button
-            // onClick={() => onSelectOrganization(organization)}
-            className='flex-1 bg-primary hover:bg-primary/90'
-          >
-            <ExternalLinkIcon className='w-4 h-4 mr-2' />
-            Ver Dashboard
+          <Button asChild className='flex-1 bg-primary hover:bg-primary/90'>
+            <Link href={`/dashboard/organizations/${id}`}>
+              <ExternalLinkIcon className='w-4 h-4 mr-2' />
+              Ver Dashboard
+            </Link>
           </Button>
+
           <Button variant='outline' size='sm' asChild>
-            <Link href={"/"}>
+            <Link href={`/dashboard/organizations/${id}`}>
               <ExternalLinkIcon className='w-4 h-4' />
             </Link>
-          </Button>{" "}
+          </Button>
         </div>
       </CardContent>
     </Card>

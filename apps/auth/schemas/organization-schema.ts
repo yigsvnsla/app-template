@@ -1,5 +1,5 @@
-import { t } from "elysia";
 import { OrganizationPlain } from "@app/auth/prisma/generated/prismabox/Organization";
+import { t } from "elysia";
 
 export const ORGANIZATION_CATEGORY = {
   CONSULTING: "Consulting",
