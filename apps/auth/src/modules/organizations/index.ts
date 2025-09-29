@@ -37,7 +37,7 @@ export const organizationModule = new Elysia({
     };
   })
   .get(
-    "/organization/list_renforced/:id",
+    "/organization/list-renforced/:id",
     async ({ params }) => {
       const prisma = new PrismaClient();
 
@@ -46,6 +46,13 @@ export const organizationModule = new Elysia({
           id: params.id,
         },
         include: {
+          members:true,
+          teams:true,
+          invitations:{
+            where:{
+              status:{contains:"pending"}
+            }
+          },
           _count: {
             select: {
               members: true,

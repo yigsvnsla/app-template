@@ -4,7 +4,7 @@ import { authApiClient } from "@/utils/auth-api-client";
 export const useGetOrgStadistics = () => {
   return useSWR("/organization/stadistics", async (_) => {
     const response = await authApiClient.auth.api.organization.stadistics.get({
-      $fetch: {
+      fetch: {
         credentials: "include",
       },
     });

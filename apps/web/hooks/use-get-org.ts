@@ -5,10 +5,9 @@ export const useGetOrgRenforced = (orgId: string) => {
   return useSWR("/organization/list-renforced", async (_) => {
     const response = await authApiClient.auth.api.organization["list-renforced"]({ id: orgId }).get(
       {
-        $fetch: {
+        fetch: {
           credentials: "include",
         },
-        $headers: {},
       },
     );
     if (response.error) {

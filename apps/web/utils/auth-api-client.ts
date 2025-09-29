@@ -1,4 +1,4 @@
 import type { App } from "@app/auth/src";
-import { edenTreaty } from "@elysiajs/eden";
+import { treaty } from "@elysiajs/eden";
 
-export const authApiClient = edenTreaty<App>("http://localhost:8888");
+export const authApiClient = treaty<App>("http://localhost:8888");

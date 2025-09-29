@@ -1,10 +1,15 @@
 import { Card, CardContent } from "@packages/ui/components/card";
 import { Building2Icon, CalendarIcon, UsersIcon } from "lucide-react";
 import type { FC } from "react";
-import { useGetOrgStadistics } from "@/hooks/use-get-org-stadistic";
+import { useParams } from "next/navigation";
+import { useGetOrgRenforced } from "@/hooks/use-get-org";
 
 export const TeamStadisticBanner: FC = () => {
-  const { data: stadistics } = useGetOrgStadistics();
+  const {id} = useParams<{id:string}>()
+
+
+
+  const { data: stadistics } = useGetOrgRenforced(id) ;
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
