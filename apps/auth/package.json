@@ -3,7 +3,7 @@
   "version": "1.0.50",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts",
+    "dev": "bun run --watch src/init.ts",
     "::generate-db": "bun run ::generate-schemas-auth && bun run ::generate-types-env && bun run ::generate-types-database",
     "::migrate": "bunx @better-auth/cli@latest migrate --y",
     "::generate": "bunx @better-auth/cli@latest generate --y",

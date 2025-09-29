@@ -1,5 +1,5 @@
 import { organization } from "better-auth/plugins";
-import { ac, roles } from '../utils/permissions';
+import { ac, roles } from '@app/auth/utils/permissions';
 
 export const organizationPlugin = organization({
   ac,

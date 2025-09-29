@@ -1,6 +1,6 @@
 import { inferAdditionalFields, organizationClient } from "better-auth/client/plugins";
 import { createAuthClient as betterAuthClient } from "better-auth/react";
-import type { auth } from "../utils/auth";
+import type { auth } from "@app/auth/utils/auth";
 
 export const createAuthClient = (url: string) => {
   return betterAuthClient({

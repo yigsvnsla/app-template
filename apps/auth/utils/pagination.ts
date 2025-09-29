@@ -1,4 +1,4 @@
-import type { PaginationDto } from "../schemas/pagination-schema";
+import type { PaginationDto } from "@app/auth/schemas/pagination-schema";
 
 export const paginationHandler = (page: number, limit: number, total: number) =>
   ({

@@ -6,14 +6,19 @@
         "name": "next"
       }
     ],
+    "strict": true,
     "paths": {
       "@/*": [
         "./*"
       ],
+      "@packages/ui/*": [
+        "../../packages/ui/src/*"
+      ],
       "@app/auth/*": [
         "../../apps/auth/*"
       ]
-    }
+    },
+
   },
   "include": [
     "next-env.d.ts",
