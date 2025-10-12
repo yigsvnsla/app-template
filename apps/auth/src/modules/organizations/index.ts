@@ -7,7 +7,7 @@ import { RequestDto } from "@app/auth/schemas/request-schema";
 import { middleware } from "@app/auth/utils/middleware";
 import { paginationHandler } from "@app/auth/utils/pagination";
 import { metadataHandler, responseHandler } from "@app/auth/utils/response";
-import Elysia, { StatusMap, t } from "elysia";
+import Elysia, { StatusMap } from "elysia";
 import Value from "typebox/value";
 
 type InvitationStatus = "pending" | "accepted" | "rejected" | "canceled"; //! TIPADO TEMPORAL, USAR PRISMABOX
@@ -46,12 +46,16 @@ export const organizationModule = new Elysia({
           id: params.id,
         },
         include: {
-          members:true,
-          teams:true,
-          invitations:{
-            where:{
-              status:{contains:"pending"}
-            }
+          members: {
+            include: {
+              user: true,
+            },
+          },
+          teams: true,
+          invitations: {
+            where: {
+              status: { contains: "pending" },
+            },
           },
           _count: {
             select: {
@@ -86,8 +90,6 @@ export const organizationModule = new Elysia({
           },
         },
       });
-
-      console.log({ length: organizations.length }, { limit, offset });
 
       const organizationsMaped = organizations.map(({ _count, ...org }) => ({
         ...org,

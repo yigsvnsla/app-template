@@ -20,8 +20,7 @@ import {
   SquareTerminalIcon,
 } from "lucide-react";
 import type * as React from "react";
-import { NavMain } from "./nav-main";
-import { NavProjects } from "./nav-projects";
+import { NavMainReforced } from "./nav-main-reforced";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
 
@@ -162,8 +161,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMainReforced />
+        {/* <NavMain items={data.navMain} /> */}
+        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

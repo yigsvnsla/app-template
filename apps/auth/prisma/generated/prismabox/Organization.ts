@@ -1,6 +1,8 @@
 import { t } from "elysia";
-import { __nullable__ } from "./__nullable__";
+
 import { __transformDate__ } from "./__transformDate__";
+
+import { __nullable__ } from "./__nullable__";
 
 export const OrganizationPlain = t.Object({
   id: t.String(),
@@ -216,6 +218,10 @@ export const OrganizationWhereUnique = t.Recursive(
             {
               id: t.String(),
               slug: t.String(),
+              slug: t.Object(
+                { slug: t.String() },
+                { additionalProperties: true },
+              ),
             },
             { additionalProperties: true },
           ),
@@ -226,7 +232,10 @@ export const OrganizationWhereUnique = t.Recursive(
             t.Object({ id: t.String() }),
             t.Object({ slug: t.String() }),
             t.Object({
-              slug: t.Object({ slug: t.String() }, { additionalProperties: true }),
+              slug: t.Object(
+                { slug: t.String() },
+                { additionalProperties: true },
+              ),
             }),
           ],
           { additionalProperties: true },
@@ -304,7 +313,10 @@ export const OrganizationOrderBy = t.Partial(
   }),
 );
 
-export const Organization = t.Composite([OrganizationPlain, OrganizationRelations]);
+export const Organization = t.Composite([
+  OrganizationPlain,
+  OrganizationRelations,
+]);
 
 export const OrganizationInputCreate = t.Composite([
   OrganizationPlainInputCreate,

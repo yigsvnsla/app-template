@@ -3,10 +3,11 @@ import type { NextConfig } from "next";
 // @ts-check
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
-  /* config options here */
+  typedRoutes: true,
   experimental: {
-    typedRoutes: true,
+    typedEnv: true,
   },
+  /* config options here */
 };
 
 export default nextConfig;

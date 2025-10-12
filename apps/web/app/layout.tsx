@@ -1,6 +1,10 @@
+import { loadEnvConfig } from "@next/env";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+const projectDir = process.cwd();
+loadEnvConfig(projectDir);
 
 import "@packages/ui/globals.css";
 

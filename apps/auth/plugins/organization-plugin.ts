@@ -1,5 +1,5 @@
+import { ac, roles } from "@app/auth/utils/permissions";
 import { organization } from "better-auth/plugins";
-import { ac, roles } from '@app/auth/utils/permissions';
 
 export const organizationPlugin = organization({
   ac,
@@ -13,4 +13,15 @@ export const organizationPlugin = organization({
     allowRemovingAllTeams: false,
   },
   organizationHooks: {},
-})
+  schema: {
+    organization: {
+      additionalFields: {
+        myCustomField: {
+          type: "string",
+          input: true,
+          required: false,
+        },
+      },
+    },
+  },
+});
