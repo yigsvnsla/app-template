@@ -14,6 +14,11 @@
     }
   ],
   "settings": {
+    "editor.inlineSuggest.enabled": false,
+    "editor.suggest.showWords": false,
+    "github.copilot.inlineSuggest.enable": true,
+    "github.copilot.suggestions.showForCompletions": false,
+    "intellicode.completionsEnabled": false,
     "prettier.enable": false,
     "eslint.enable": false,
     "biome.enabled": true,

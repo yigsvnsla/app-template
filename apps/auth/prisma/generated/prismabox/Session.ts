@@ -7,11 +7,15 @@ import { __nullable__ } from "./__nullable__";
 export const SessionPlain = t.Object({
   id: t.String(),
   expiresAt: t.Date(),
-  token: t.String(),
+  token: t.String({ description: `FAKE:faker.internet.jwt()` }),
   createdAt: t.Date(),
   updatedAt: t.Date(),
-  ipAddress: __nullable__(t.String()),
-  userAgent: __nullable__(t.String()),
+  ipAddress: __nullable__(
+    t.String({ description: `FAKE:faker.internet.ipv4()` }),
+  ),
+  userAgent: __nullable__(
+    t.String({ description: `FAKE:faker.internet.userAgent()` }),
+  ),
   userId: t.String(),
   activeOrganizationId: __nullable__(t.String()),
   activeTeamId: __nullable__(t.String()),
@@ -21,26 +25,38 @@ export const SessionRelations = t.Object({
   user: t.Object({
     id: t.String(),
     email: t.String(),
-    name: __nullable__(t.String()),
+    name: __nullable__(
+      t.String({ description: `FAKE:faker.person.fullName()` }),
+    ),
     createdAt: t.Date(),
     updatedAt: t.Date(),
-    emailVerified: t.Boolean(),
-    image: __nullable__(t.String()),
+    emailVerified: t.Boolean({
+      description: `FAKE:faker.datatype.boolean({ probability: 0.5 })`,
+    }),
+    image: __nullable__(t.String({ description: `FAKE:faker.image.avatar()` })),
   }),
 });
 
 export const SessionPlainInputCreate = t.Object({
   expiresAt: t.Date(),
-  token: t.String(),
-  ipAddress: t.Optional(__nullable__(t.String())),
-  userAgent: t.Optional(__nullable__(t.String())),
+  token: t.String({ description: `FAKE:faker.internet.jwt()` }),
+  ipAddress: t.Optional(
+    __nullable__(t.String({ description: `FAKE:faker.internet.ipv4()` })),
+  ),
+  userAgent: t.Optional(
+    __nullable__(t.String({ description: `FAKE:faker.internet.userAgent()` })),
+  ),
 });
 
 export const SessionPlainInputUpdate = t.Object({
   expiresAt: t.Optional(t.Date()),
-  token: t.Optional(t.String()),
-  ipAddress: t.Optional(__nullable__(t.String())),
-  userAgent: t.Optional(__nullable__(t.String())),
+  token: t.Optional(t.String({ description: `FAKE:faker.internet.jwt()` })),
+  ipAddress: t.Optional(
+    __nullable__(t.String({ description: `FAKE:faker.internet.ipv4()` })),
+  ),
+  userAgent: t.Optional(
+    __nullable__(t.String({ description: `FAKE:faker.internet.userAgent()` })),
+  ),
 });
 
 export const SessionRelationsInputCreate = t.Object({
@@ -71,11 +87,13 @@ export const SessionWhere = t.Partial(
           OR: t.Array(Self, { additionalProperties: true }),
           id: t.String(),
           expiresAt: t.Date(),
-          token: t.String(),
+          token: t.String({ description: `FAKE:faker.internet.jwt()` }),
           createdAt: t.Date(),
           updatedAt: t.Date(),
-          ipAddress: t.String(),
-          userAgent: t.String(),
+          ipAddress: t.String({ description: `FAKE:faker.internet.ipv4()` }),
+          userAgent: t.String({
+            description: `FAKE:faker.internet.userAgent()`,
+          }),
           userId: t.String(),
           activeOrganizationId: t.String(),
           activeTeamId: t.String(),
@@ -94,9 +112,11 @@ export const SessionWhereUnique = t.Recursive(
           t.Object(
             {
               id: t.String(),
-              token: t.String(),
+              token: t.String({ description: `FAKE:faker.internet.jwt()` }),
               token: t.Object(
-                { token: t.String() },
+                {
+                  token: t.String({ description: `FAKE:faker.internet.jwt()` }),
+                },
                 { additionalProperties: true },
               ),
             },
@@ -107,10 +127,14 @@ export const SessionWhereUnique = t.Recursive(
         t.Union(
           [
             t.Object({ id: t.String() }),
-            t.Object({ token: t.String() }),
+            t.Object({
+              token: t.String({ description: `FAKE:faker.internet.jwt()` }),
+            }),
             t.Object({
               token: t.Object(
-                { token: t.String() },
+                {
+                  token: t.String({ description: `FAKE:faker.internet.jwt()` }),
+                },
                 { additionalProperties: true },
               ),
             }),
@@ -129,11 +153,13 @@ export const SessionWhereUnique = t.Recursive(
           t.Object({
             id: t.String(),
             expiresAt: t.Date(),
-            token: t.String(),
+            token: t.String({ description: `FAKE:faker.internet.jwt()` }),
             createdAt: t.Date(),
             updatedAt: t.Date(),
-            ipAddress: t.String(),
-            userAgent: t.String(),
+            ipAddress: t.String({ description: `FAKE:faker.internet.ipv4()` }),
+            userAgent: t.String({
+              description: `FAKE:faker.internet.userAgent()`,
+            }),
             userId: t.String(),
             activeOrganizationId: t.String(),
             activeTeamId: t.String(),

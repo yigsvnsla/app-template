@@ -2076,10 +2076,19 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
+      /**
+       * FAKE:faker.person.fullName()
+       */
       name: string | null
       createdAt: Date
       updatedAt: Date
+      /**
+       * FAKE:faker.datatype.boolean({ probability: 0.5 })
+       */
       emailVerified: boolean
+      /**
+       * FAKE:faker.image.avatar()
+       */
       image: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -3307,10 +3316,19 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       expiresAt: Date
+      /**
+       * FAKE:faker.internet.jwt()
+       */
       token: string
       createdAt: Date
       updatedAt: Date
+      /**
+       * FAKE:faker.internet.ipv4()
+       */
       ipAddress: string | null
+      /**
+       * FAKE:faker.internet.userAgent()
+       */
       userAgent: string | null
       userId: string
       activeOrganizationId: string | null
@@ -4460,7 +4478,13 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      /**
+       * FAKE:faker.string.uuid()
+       */
       accountId: string
+      /**
+       * FAKE:faker.string.uuid()
+       */
       providerId: string
       userId: string
       accessToken: string | null

@@ -4,6 +4,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/init.ts",
+    "::seed": "bunx --bun @better-auth-kit/cli@latest seed --config ./utils/auth.ts",
     "::generate-db": "bun run ::generate-schemas-auth && bun run ::generate-types-env && bun run ::generate-types-database",
     "::migrate": "bunx @better-auth/cli@latest migrate --y",
     "::generate": "bunx @better-auth/cli@latest generate --y",
@@ -24,9 +25,15 @@
     "typebox": "^1.0.19"
   },
   "devDependencies": {
+    "@better-auth-kit/seed": "^1.0.12",
+    "@faker-js/faker": "^10.0.0",
     "@types/bun": "^1.2.23",
     "@types/node": "^24.5.2",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "prisma-generator-fake-data": "^0.16.2"
+  },
+  "prisma": {
+    "seed": "bun run prisma/seed/index.ts"
   },
   "module": "src/index.js"
 }

@@ -6,8 +6,8 @@ import { __nullable__ } from "./__nullable__";
 
 export const AccountPlain = t.Object({
   id: t.String(),
-  accountId: t.String(),
-  providerId: t.String(),
+  accountId: t.String({ description: `FAKE:faker.string.uuid()` }),
+  providerId: t.String({ description: `FAKE:faker.string.uuid()` }),
   userId: t.String(),
   accessToken: __nullable__(t.String()),
   refreshToken: __nullable__(t.String()),
@@ -24,11 +24,15 @@ export const AccountRelations = t.Object({
   user: t.Object({
     id: t.String(),
     email: t.String(),
-    name: __nullable__(t.String()),
+    name: __nullable__(
+      t.String({ description: `FAKE:faker.person.fullName()` }),
+    ),
     createdAt: t.Date(),
     updatedAt: t.Date(),
-    emailVerified: t.Boolean(),
-    image: __nullable__(t.String()),
+    emailVerified: t.Boolean({
+      description: `FAKE:faker.datatype.boolean({ probability: 0.5 })`,
+    }),
+    image: __nullable__(t.String({ description: `FAKE:faker.image.avatar()` })),
   }),
 });
 
@@ -79,8 +83,8 @@ export const AccountWhere = t.Partial(
           NOT: t.Union([Self, t.Array(Self, { additionalProperties: true })]),
           OR: t.Array(Self, { additionalProperties: true }),
           id: t.String(),
-          accountId: t.String(),
-          providerId: t.String(),
+          accountId: t.String({ description: `FAKE:faker.string.uuid()` }),
+          providerId: t.String({ description: `FAKE:faker.string.uuid()` }),
           userId: t.String(),
           accessToken: t.String(),
           refreshToken: t.String(),
@@ -118,8 +122,8 @@ export const AccountWhereUnique = t.Recursive(
         t.Partial(
           t.Object({
             id: t.String(),
-            accountId: t.String(),
-            providerId: t.String(),
+            accountId: t.String({ description: `FAKE:faker.string.uuid()` }),
+            providerId: t.String({ description: `FAKE:faker.string.uuid()` }),
             userId: t.String(),
             accessToken: t.String(),
             refreshToken: t.String(),

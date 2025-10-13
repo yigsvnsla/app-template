@@ -22,11 +22,15 @@ export const TeamMemberRelations = t.Object({
   user: t.Object({
     id: t.String(),
     email: t.String(),
-    name: __nullable__(t.String()),
+    name: __nullable__(
+      t.String({ description: `FAKE:faker.person.fullName()` }),
+    ),
     createdAt: t.Date(),
     updatedAt: t.Date(),
-    emailVerified: t.Boolean(),
-    image: __nullable__(t.String()),
+    emailVerified: t.Boolean({
+      description: `FAKE:faker.datatype.boolean({ probability: 0.5 })`,
+    }),
+    image: __nullable__(t.String({ description: `FAKE:faker.image.avatar()` })),
   }),
 });
 

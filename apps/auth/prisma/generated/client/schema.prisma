@@ -4,14 +4,19 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
 generator client {
   provider = "prisma-client-js"
   output   = "./generated/client"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+generator faker {
+  provider = "prisma-generator-fake-data"
+  output   = "./generated/faker/index.ts"
 }
 
 generator prismabox {
@@ -26,10 +31,13 @@ generator prismabox {
 model User {
   id            String   @id @default(cuid())
   email         String   @unique
+  ///FAKE:faker.person.fullName()
   name          String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  ///FAKE:faker.datatype.boolean({ probability: 0.5 })
   emailVerified Boolean  @default(false)
+  ///FAKE:faker.image.avatar()
   image         String?
 
   sessions    Session[]
@@ -44,10 +52,13 @@ model User {
 model Session {
   id                   String   @id
   expiresAt            DateTime
+  ///FAKE:faker.internet.jwt()
   token                String
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
+  ///FAKE:faker.internet.ipv4()
   ipAddress            String?
+  ///FAKE:faker.internet.userAgent()
   userAgent            String?
   userId               String
   user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -60,7 +71,9 @@ model Session {
 
 model Account {
   id                    String    @id
+  ///FAKE:faker.string.uuid()
   accountId             String
+  ///FAKE:faker.string.uuid()
   providerId            String
   userId                String
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)

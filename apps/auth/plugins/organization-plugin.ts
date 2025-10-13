@@ -13,15 +13,15 @@ export const organizationPlugin = organization({
     allowRemovingAllTeams: false,
   },
   organizationHooks: {},
-  schema: {
-    organization: {
-      additionalFields: {
-        myCustomField: {
-          type: "string",
-          input: true,
-          required: false,
-        },
-      },
-    },
-  },
+  // schema: {
+  //   organization: {
+  //     additionalFields: {
+  //       myCustomField: {
+  //         type: "string",
+  //         input: true,
+  //         required: false,
+  //       },
+  //     },
+  //   },
+  // },
 });
